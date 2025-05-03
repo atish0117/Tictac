@@ -10,6 +10,7 @@ import TicTacToe4x4 from './Pages/TicTacToe4x4'
 import AI_Xtreme4x4 from './Pages/AI_Xtreme4x4'
 import Xtreme4x4 from './Pages/Xtreme4x4'
 import AI_Xtreme6x6 from './Pages/AI_Xtreme6x6'
+import Xtreme6x6 from './Pages/Xtreme6x6'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 export const App = () => {
 
@@ -27,6 +28,7 @@ export const App = () => {
       <Route path='Xtreme4x4' element={<Xtreme4x4/>}/>
       <Route path='AI_Xtreme4x4' element={<AI_Xtreme4x4/>}/>
       <Route path='AI_Xtreme6x6' element={<AI_Xtreme6x6/>}/>
+      <Route path='Xtreme6x6' element={<Xtreme6x6/>}/>
       <Route path='*' element={<Error/>}/>
     </Routes>
     </BrowserRouter>
