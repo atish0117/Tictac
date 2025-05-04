@@ -187,7 +187,7 @@ const Xtreme6x6 = () => {
 
         <div className={`flex-1 text-center ${oScore > xScore ? "text-green-600" : ""}`}>
           <h2 className="text-lg font-bold flex items-center justify-center gap-2">
-            🤖 Computer (O)
+          🧑 Player (O)
           </h2>
           <p className="text-3xl font-extrabold">{oScore}</p>
           <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">
@@ -211,7 +211,7 @@ const Xtreme6x6 = () => {
       </div>
 
       <div
-        className="grid grid-cols-4 gap-4 bg-amber-200 p-4 rounded-2xl transform rotate-3d-[30deg]"
+        className="grid grid-cols-6 gap-4 bg-amber-200 p-4 rounded-2xl transform rotate-3d-[30deg]"
         style={{
           boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.4)",
           backdropFilter: "blur(4px)",
@@ -228,7 +228,7 @@ const Xtreme6x6 = () => {
           return (
             <div
               key={index}
-              className={`w-24 h-24 flex items-center justify-center text-4xl font-extrabold border-2 rounded-xl ${
+              className={`w-16 h-16 flex items-center justify-center text-4xl font-extrabold border-2 rounded-xl ${
                 value === "X" ? "text-blue-600" : "text-pink-500"
               } ${!value ? "hover:shadow-2xl hover:scale-105 cursor-pointer" : ""} ${
                 isLight(index) ? "bg-gray-300 opacity-70" : "bg-white"
