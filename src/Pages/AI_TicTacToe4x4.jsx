@@ -182,9 +182,20 @@ const AI_TicTacToe4x4 = () => {
     return (
       <button
         key={index}
-        className={`w-16 h-16 text-xl font-bold border border-gray-400 flex items-center justify-center ${
+        className={`w-16 h-16  md:w-20 md:h-20 border-2 flex items-center justify-center
+           text-2xl font-bold cursor-pointer rounded-md
+          transition-all duration-200 ease-in-out select-none
+          ${
+            board[index] === 'X'
+              ? 'text-blue-600'
+              : board[index] === 'O'
+              ? 'text-red-500'
+              : 'text-pink-500'
+          }
+          ${
           isWinningCell ? 'bg-green-300' : 'bg-white'
-        }`}
+        }
+        ${!board[index] && !winnerInfo.winner ? 'hover:bg-gray-200' : ''}`}
         onClick={() => handleClick(index)}
       >
         {board[index]}
@@ -193,9 +204,9 @@ const AI_TicTacToe4x4 = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-10">
+    <div className="flex flex-col items-center bg-gradient-to-br from-blue-100 to-purple-200">
       <h1 className="text-3xl font-bold mb-4">4x4 Tic Tac Toe (AI Mode)</h1>
-
+      {/* Scoreboard */}
       <div className="w-1/2 flex justify-between items-center bg-white p-4 rounded-lg shadow-lg mb-6">
         <div className="text-center">
           <p className="text-xl font-bold text-gray-800">🧑 Player (X)</p>
@@ -218,8 +229,15 @@ const AI_TicTacToe4x4 = () => {
       </div>
 
       <div
-        className={`grid gap-1`}
-        style={{ gridTemplateColumns: `repeat(${size}, 4rem)` }}
+        className={`grid gap-2 grid-cols-4 p-4`}
+        style={{  maxWidth: 'fit-content',
+          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.4)",
+          backdropFilter: "blur(4px)",
+          WebkitBackdropFilter: "blur(4px)",
+          background: "rgba(250, 242, 242, 0.05)",
+          borderRadius: "10px",
+          border: "1px solid rgba(255, 255, 255, 0.18)",
+        }}
       >
         {board.map((_, index) => renderCell(index))}
       </div>
@@ -227,7 +245,7 @@ const AI_TicTacToe4x4 = () => {
       <div className="mt-4 text-lg font-medium">
         {winnerInfo.winner ? (
           winnerInfo.winner === 'Draw' ? (
-            <p className="text-yellow-600">🚫 Draw</p>
+            <p className="text-yellow-600">🚫 It's a Draw!</p>
           ) : (
             <p className="text-green-600">🎉 Winner: {winnerInfo.winner}</p>
           )

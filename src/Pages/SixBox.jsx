@@ -125,9 +125,20 @@ const TicTacToe6x6 = () => {
     return (
       <button
         key={index}
-        className={`w-16 h-16 text-xl font-bold border border-gray-400 flex items-center justify-center ${
+        className={`w-16 h-16 md:w-20 md:h-20 border-2 flex items-center justify-center 
+          text-2xl font-bold cursor-pointer rounded-md
+          transition-all duration-200 ease-in-out select-none
+          ${
+            board[index] === 'X'
+              ? 'text-blue-600'
+              : board[index] === 'O'
+              ? 'text-red-500'
+              : 'text-pink-500'
+          }
+          ${
           isWinningCell ? 'bg-green-300' : 'bg-white'
-        }`}
+        }
+        ${!board[index] && !winnerInfo.winner ? 'hover:bg-gray-200' : ''}`}
         onClick={() => handleClick(index)}
       >
         {board[index]}
@@ -136,8 +147,8 @@ const TicTacToe6x6 = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-10">
-      <h1 className="text-3xl font-bold mb-4">6x6 Tic Tac Toe</h1>
+    <div className="flex flex-col items-center pt-10 bg-gradient-to-br from-blue-100 to-purple-200 ">
+      <h1 className="text-3xl font-bold mb-4">6x6 Tic Tac Toe (PVP)</h1>
 
       {/* Detailed Scoreboard */}
       <div className="w-1/2 flex justify-between items-center bg-white p-4 rounded-lg shadow-lg mb-6">
@@ -147,7 +158,7 @@ const TicTacToe6x6 = () => {
     <p className="text-lg text-gray-600">Wins</p>
   </div>
   <div className="text-center">
-    <p className="text-xl font-bold text-gray-800">🤖 Player (O)</p>
+    <p className="text-xl font-bold text-gray-800">🧑 Player (O)</p>
     <p className="text-3xl font-extrabold text-red-600">{oWins}</p>
     <p className="text-lg text-gray-600">Wins</p>
   </div>

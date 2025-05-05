@@ -25,6 +25,10 @@ const TicTacToe = () => {
   const [isDarkMode, setIsDarkMode] = useState(false); // For Dark Mode Toggle
   const [turnChanged, setTurnChanged] = useState(false); // For detecting turn change
 
+ // Score state
+  const [xScore, setXScore] = useState(0);
+  const [oScore, setOScore] = useState(0);
+
   // Function to generate random color
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
@@ -90,6 +94,13 @@ const TicTacToe = () => {
       // Play sound when winner is declared
       const winSound = new Audio("/win-sound.mp3");
       winSound.play();
+
+       // Update the score based on the winner
+      if (win === "X") {
+        setXScore(xScore + 1);
+      } else {
+        setOScore(oScore + 1);
+      }
     } else {
       setIsXNext(!isXNext);
       setTurnChanged(true); // Trigger turn change effect
@@ -129,6 +140,46 @@ const TicTacToe = () => {
       <h1 className="text-4xl font-bold mb-6 text-gray-800 drop-shadow-md">
       Xtreme Tic-Tac-Toe
       </h1>
+
+       {/* Scoreboard */}
+       <div className="mb-6 w-full max-w-xl bg-white dark:bg-gray-700 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className={`flex-1 text-center ${xScore > oScore ? "text-green-600" : ""}`}>
+          <h2 className="text-lg font-bold flex items-center justify-center gap-2">
+            🧑 Player (X)
+          </h2>
+          <p className="text-3xl font-extrabold">{xScore}</p>
+          <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">
+            <div
+              className="h-full bg-blue-500 transition-all duration-500"
+              style={{ width: `${xScore + oScore === 0 ? 50 : (xScore / (xScore + oScore)) * 100}%` }}
+            ></div>
+          </div>
+        </div>
+
+        <div className={`flex-1 text-center ${oScore > xScore ? "text-green-600" : ""}`}>
+          <h2 className="text-lg font-bold flex items-center justify-center gap-2">
+          🧑 Player (O)
+          </h2>
+          <p className="text-3xl font-extrabold">{oScore}</p>
+          <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">
+            <div
+              className="h-full bg-pink-500 transition-all duration-500"
+              style={{ width: `${xScore + oScore === 0 ? 50 : (oScore / (xScore + oScore)) * 100}%` }}
+            ></div>
+          </div>
+        </div>
+
+        <button
+          onClick={() => {
+            setXScore(0);
+            setOScore(0);
+          }}
+          className="bg-red-500 text-white font-medium px-4 py-2 rounded hover:bg-red-600 transition shadow"
+          title="Reset both scores to zero"
+        >
+          Reset Scores
+        </button>
+      </div>
 
       <div 
         className="grid grid-cols-3 gap-4 bg-amber-200 p-4 rounded-2xl transform rotate-3d-[30deg]" 
@@ -197,11 +248,3 @@ export default TicTacToe;
 
 
 
-  // style={{
-        //   boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.4)",
-        //   backdropFilter: "blur(4px)",
-        //   WebkitBackdropFilter: "blur(4px)",
-        //   background: "rgba(250, 242, 242, 0.05)",
-        //   borderRadius: "10px",
-        //   border: "1px solid rgba(255, 255, 255, 0.18)",
-        // }}
