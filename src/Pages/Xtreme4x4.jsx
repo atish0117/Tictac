@@ -166,7 +166,7 @@ const Xtreme4x4 = () => {
 
         <div className={`flex-1 text-center ${oScore > xScore ? "text-green-600" : ""}`}>
           <h2 className="text-lg font-bold flex items-center justify-center gap-2">
-            🤖 Computer (O)
+            🧑 Player (O)
           </h2>
           <p className="text-3xl font-extrabold">{oScore}</p>
           <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">

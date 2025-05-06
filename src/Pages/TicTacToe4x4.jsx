@@ -36,7 +36,6 @@ const TicTacToe4x4 = () => {
     setBoard(Array(totalCells).fill(null));
     setIsXNext(true);
     setWinnerInfo({ winner: null, winningCells: [] });
-    setTotalGames((prev) => prev + 1);
   };
 
   const resetScores = () => {
@@ -45,6 +44,12 @@ const TicTacToe4x4 = () => {
     setDraws(0);
     setTotalGames(0);
   };
+
+  // ...Total numbers of game  ...  
+  useEffect(() => {
+    setTotalGames(xWins + oWins + draws);
+  }, [xWins, oWins, draws]);
+  
 
   const calculateWinner = (squares, size) => {
     const lines = generateWinningCombos(size, 4);

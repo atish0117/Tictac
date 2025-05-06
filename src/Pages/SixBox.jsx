@@ -102,6 +102,11 @@ const TicTacToe6x6 = () => {
     setTotalGames((prev) => prev + 1);
   };
 
+   // ...Total numbers of game  ...  
+      useEffect(() => {
+        setTotalGames(xWins + oWins + draws);
+      }, [xWins, oWins, draws]);
+
   // Reset scores when clicked
   const resetScores = () => {
     setXWins(0);

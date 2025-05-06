@@ -55,8 +55,12 @@ const AI_TicTacToe4x4 = () => {
     setBoard(Array(totalCells).fill(null));
     setIsXNext(true);
     setWinnerInfo({ winner: null, winningCells: [] });
-    setTotalGames((prev) => prev + 1);
   };
+
+  // ...Total numbers of game  ...  
+    useEffect(() => {
+      setTotalGames(xWins + oWins + draws);
+    }, [xWins, oWins, draws]);
 
   const resetScores = () => {
     setXWins(0);
