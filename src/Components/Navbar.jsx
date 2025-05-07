@@ -61,7 +61,7 @@ const Navbar = () => {
                   <NavLink to="/" className="block px-4 py-2 text-gray-800 hover:bg-blue-100">
                     Two Players
                   </NavLink>
-                  <NavLink to="/computer" className="block px-4 py-2 text-gray-800 hover:bg-blue-100">
+                  <NavLink to="computer" className="block px-4 py-2 text-gray-800 hover:bg-blue-100">
                     With Computer
                   </NavLink>
                 </div>
@@ -79,16 +79,16 @@ const Navbar = () => {
               </button>
               {showDropdown.four && (
                 <div className="absolute bg-white rounded shadow-md z-10 text-xs">
-                  <NavLink to="/four" className="block px-4 py-2 text-gray-800 hover:bg-blue-100">
+                  <NavLink to="four" className="block px-4 py-2 text-gray-800 hover:bg-blue-100">
                     Two Players
                   </NavLink>
-                  <NavLink to="/TicTacToe4x4" className="block px-4 py-2 text-gray-800 hover:bg-blue-100">
+                  <NavLink to="TicTacToe4x4" className="block px-4 py-2 text-gray-800 hover:bg-blue-100">
                     With Computer
                   </NavLink>
-                  <NavLink to="/Xtreme4x4" className="block px-2 py-2 text-gray-800 hover:bg-blue-100">
+                  <NavLink to="Xtreme4x4" className="block px-2 py-2 text-gray-800 hover:bg-blue-100">
                     Xtreme Two Players
                   </NavLink>
-                  <NavLink to="/AI_Xtreme4x4" className="block px-2 py-2 text-gray-800 hover:bg-blue-100">
+                  <NavLink to="AI_Xtreme4x4" className="block px-2 py-2 text-gray-800 hover:bg-blue-100">
                   Xtreme With Computer
                   </NavLink>
                 </div>
@@ -132,7 +132,7 @@ const Navbar = () => {
           <div>
             <span className="text-white font-semibold px-3">3x3 Game</span>
             <NavLink to="/" className="block text-gray-300 px-4 py-1 hover:text-white">Two Players</NavLink>
-            <NavLink to="/computer" className="block text-gray-300 px-4 py-1 hover:text-white">With Computer</NavLink>
+            <NavLink to="computer" className="block text-gray-300 px-4 py-1 hover:text-white">With Computer</NavLink>
           </div>
           <div>
             <span className="text-white font-semibold px-3">4x4 Game</span>

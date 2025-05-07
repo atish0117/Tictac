@@ -23,8 +23,8 @@ export const App = () => {
       <Route path='computer' element={<Computer/>}/>
       <Route path='four' element={<TicTacToe4x4/>}/>
       <Route path='TicTacToe4x4' element={<AI_TicTacToe4x4/>}/>
-      <Route path='AI_Xtreme4x4' element={<AI_Xtreme4x4/>}/>
       <Route path='Xtreme4x4' element={<Xtreme4x4/>}/>
+      <Route path='AI_Xtreme4x4' element={<AI_Xtreme4x4/>}/>
       <Route path='six' element={<TicTacToe6x6/>}/>
       <Route path='TicTacToe6x6' element={<AI_TicTacToe6x6/>}/>
       <Route path='AI_Xtreme6x6' element={<AI_Xtreme6x6/>}/>
