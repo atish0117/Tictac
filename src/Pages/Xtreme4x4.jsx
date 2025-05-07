@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaSun } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
 
@@ -32,7 +32,7 @@ const Xtreme4x4 = () => {
   const [winningColor, setWinningColor] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [turnChanged, setTurnChanged] = useState(false);
-
+  const [totalGames, setTotalGames] = useState(0);
   // Score variables
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
@@ -113,6 +113,10 @@ const Xtreme4x4 = () => {
     }
   };
 
+  useEffect(()=>{
+      setTotalGames(xScore+oScore)
+  },[xScore,oScore])
+
   const restartGame = () => {
     setBoard(Array(16).fill(""));
     setXQueue([]);
@@ -187,6 +191,10 @@ const Xtreme4x4 = () => {
         >
           Reset Scores
         </button>
+      </div>
+
+      <div className="text-lg text-center mb-4">
+        <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>
       </div>
 
       <div

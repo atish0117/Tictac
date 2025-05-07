@@ -22,7 +22,7 @@ const Computer = () => {
   const [turnChanged, setTurnChanged] = useState(false);
   const [xWins, setXWins] = useState(0);
   const [oWins, setOWins] = useState(0);
-
+  const [totalGames, setTotalGames] = useState(0);
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
     let color = "#";
@@ -159,6 +159,12 @@ const Computer = () => {
     }
   }, [isXNext, board, winner]);
 
+
+  useEffect(()=>{
+    setTotalGames(xWins+oWins)
+  },[xWins,oWins])
+
+
   const restartGame = () => {
     setBoard(Array(9).fill(""));
     setXQueue([]);
@@ -192,7 +198,6 @@ const Computer = () => {
       </h1>
 
       {/* Scoreboard */}
-      {/* Interactive Scoreboard */}
 <div className="mb-6 w-full max-w-xl bg-white dark:bg-gray-700 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
   <div className={`flex-1 text-center ${xWins > oWins ? "text-green-600" : ""}`}>
     <h2 className="text-lg font-bold flex items-center justify-center gap-2">
@@ -229,10 +234,13 @@ const Computer = () => {
   </button>
 </div>
 
+<div className="text-lg text-center mb-4">
+        <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>
+      </div>
 
       {/* Game Board */}
       <div
-        className="grid grid-cols-3 gap-4 bg-amber-200 p-4 rounded-2xl"
+        className="grid grid-cols-3 gap-4 p-4 rounded-2xl"
         style={{
           background: 'linear-gradient(45deg, #f0f0f0, #cacaca)',
           boxShadow: 'inset 5px -5px 2px #5a5a5a, inset -5px 5px 2px #ffffff',
@@ -263,7 +271,7 @@ const Computer = () => {
       </div>
 
       {/* Info & Buttons */}
-      <div className="mt-6 flex flex-col items-center gap-2">
+      <div className="mt-3 flex flex-col items-center gap-2">
         {winner ? (
           <div className="text-2xl font-semibold text-green-600 animate-bounce">
             Winner: {winner}
@@ -278,19 +286,21 @@ const Computer = () => {
           </div>
         )}
 
+          <div className="flex gap-5">
         <button
           onClick={restartGame}
-          className="mt-4 px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg shadow-md transition-all"
+          className="mt-2 px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg shadow-md transition-all"
         >
           Restart
         </button>
 
         <button
           onClick={toggleDarkMode}
-          className="mt-4 px-6 py-2 bg-gray-300 hover:bg-gray-700 text-white rounded-lg shadow-md transition-all"
+          className="mt-2 px-6 py-2 bg-gray-300 hover:bg-gray-700 text-white rounded-lg shadow-md transition-all"
         >
           {isDarkMode ? <FaSun color="yellow" size={30} /> : <MdDarkMode color="black" size={30} />}
         </button>
+        </div>
       </div>
     </div>
   );

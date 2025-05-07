@@ -24,7 +24,7 @@ const TicTacToe = () => {
   const [winningColor, setWinningColor] = useState(""); // Store the color for the winning boxes
   const [isDarkMode, setIsDarkMode] = useState(false); // For Dark Mode Toggle
   const [turnChanged, setTurnChanged] = useState(false); // For detecting turn change
-
+  const[totalGames, setTotalGames] = useState(0)
  // Score state
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
@@ -107,6 +107,11 @@ const TicTacToe = () => {
     }
   };
 
+   // ...Total numbers of game  ...  
+      useEffect(() => {
+        setTotalGames(xScore + oScore);
+      }, [xScore, oScore]);
+
   const restartGame = () => {
     setBoard(Array(9).fill(""));
     setXQueue([]);
@@ -169,6 +174,7 @@ const TicTacToe = () => {
           </div>
         </div>
 
+      
         <button
           onClick={() => {
             setXScore(0);
@@ -179,6 +185,10 @@ const TicTacToe = () => {
         >
           Reset Scores
         </button>
+      </div>
+
+      <div className="text-lg text-center mb-4">
+        <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>
       </div>
 
       <div 
@@ -226,6 +236,7 @@ const TicTacToe = () => {
           </div>
         )}
 
+          <div className="flex gap-6">
         <button
           onClick={restartGame}
           className="mt-4 px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg shadow-md transition-all"
@@ -239,6 +250,7 @@ const TicTacToe = () => {
         >
           {isDarkMode ? <FaSun color="yellow" size={30}/> : <MdDarkMode color="black" size={30}/>}
         </button>
+        </div>
       </div>
     </div>
   );

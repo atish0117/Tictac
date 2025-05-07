@@ -220,7 +220,7 @@ const AI_Xtreme6x6 = () => {
     onClick={() => handleBoxClick(idx)}
     className={`w-24 h-24 flex items-center justify-center text-4xl font-extrabold border-2 rounded-xl 
     ${val === "X" ? "text-blue-600" : "text-pink-500"} 
-    ${!val ? "hover:shadow-2xl hover:scale-105 cursor-pointer" : ""} 
+    ${!val ? "hover:shadow-2xl hover:scale-105 cursor-pointer hover:bg-gray-200" : ""} 
     ${isLight(idx) ? "bg-gray-300 opacity-70" : "bg-white"} 
     transition-all duration-300 select-none shadow-md`}
     style={{ backgroundColor: bgColor }}

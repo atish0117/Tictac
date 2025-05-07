@@ -130,7 +130,7 @@ const TicTacToe6x6 = () => {
     return (
       <button
         key={index}
-        className={`w-16 h-16 md:w-20 md:h-20 border-2 flex items-center justify-center 
+        className={`w-16 h-16 md:w-18 md:h-18 border-2 flex items-center justify-center 
           text-2xl font-bold cursor-pointer rounded-md
           transition-all duration-200 ease-in-out select-none
           ${
@@ -168,7 +168,7 @@ const TicTacToe6x6 = () => {
     <p className="text-lg text-gray-600">Wins</p>
   </div>
   <div className="text-center">
-    <p className="text-xl font-bold text-gray-800">🔄 Draws</p>
+    <p className="text-xl font-bold text-gray-800">🤝 Draws</p>
     <p className="text-3xl font-extrabold text-yellow-600">{draws}</p>
   </div>
 </div>
@@ -182,8 +182,14 @@ const TicTacToe6x6 = () => {
 
       {/* Game Grid */}
       <div
-        className={`grid gap-1`}
-        style={{ gridTemplateColumns: `repeat(${size}, 4rem)` }}
+        className={`grid grid-cols-6 gap-1 p-4 `}
+        style={{ maxWidth: 'fit-content',
+          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.4)",
+          backdropFilter: "blur(4px)",
+          WebkitBackdropFilter: "blur(4px)",
+          background: "rgba(250, 242, 242, 0.05)",
+          borderRadius: "10px",
+          border: "1px solid rgba(255, 255, 255, 0.18)",}}
       >
         {board.map((_, index) => renderCell(index))}
       </div>

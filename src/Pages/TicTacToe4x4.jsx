@@ -115,7 +115,6 @@ const TicTacToe4x4 = () => {
           w-16 h-16 md:w-20 md:h-20 border-2 rounded-md 
           flex items-center justify-center text-2xl font-bold cursor-pointer
           transition-all duration-200 ease-in-out select-none
-          
           ${
             board[index] === 'X'
               ? 'text-blue-600'

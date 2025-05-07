@@ -131,18 +131,30 @@ const Navbar = () => {
           {/* Mobile Dropdowns (Simple display) */}
           <div>
             <span className="text-white font-semibold px-3">3x3 Game</span>
-            <NavLink to="/3x3two" className="block text-gray-300 px-4 py-1 hover:text-white">Two Players</NavLink>
-            <NavLink to="/3x3ai" className="block text-gray-300 px-4 py-1 hover:text-white">With Computer</NavLink>
+            <NavLink to="/" className="block text-gray-300 px-4 py-1 hover:text-white">Two Players</NavLink>
+            <NavLink to="/computer" className="block text-gray-300 px-4 py-1 hover:text-white">With Computer</NavLink>
           </div>
           <div>
             <span className="text-white font-semibold px-3">4x4 Game</span>
-            <NavLink to="/4x4two" className="block text-gray-300 px-4 py-1 hover:text-white">Two Players</NavLink>
-            <NavLink to="/4x4ai" className="block text-gray-300 px-4 py-1 hover:text-white">With Computer</NavLink>
+            <NavLink to="/four" className="block text-gray-300 px-4 py-1 hover:text-white">Two Players</NavLink>
+            <NavLink to="/TicTacToe4x4" className="block text-gray-300 px-4 py-1 hover:text-white">With Computer</NavLink>
+            <NavLink to="/Xtreme4x4" className="block px-2 py-2 text-gray-800 hover:bg-blue-100">
+                    Xtreme Two Players
+                  </NavLink>
+                  <NavLink to="/AI_Xtreme4x4" className="block px-2 py-2 text-gray-800 hover:bg-blue-100">
+                  Xtreme With Computer
+                  </NavLink>
           </div>
           <div>
             <span className="text-white font-semibold px-3">6x6 Game</span>
-            <NavLink to="/6x6two" className="block text-gray-300 px-4 py-1 hover:text-white">Two Players</NavLink>
+            <NavLink to="/six" className="block text-gray-300 px-4 py-1 hover:text-white">Two Players</NavLink>
             <NavLink to="/TicTacToe6x6" className="block text-gray-300 px-4 py-1 hover:text-white">With Computer</NavLink>
+            <NavLink to="/Xtreme6x6" className="block px-2 py-2 text-gray-800 hover:bg-blue-100">
+                    Xtreme Two Players
+                  </NavLink>
+                  <NavLink to="/AI_Xtreme6x6" className="block px-2 py-2 text-gray-800 hover:bg-blue-100">
+                  Xtreme With Computer
+                  </NavLink>
           </div>
         </div>
       )}

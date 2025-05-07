@@ -38,7 +38,7 @@ const AI_Xtreme4x4 = () => {
   const [turnChanged, setTurnChanged] = useState(false);
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
-
+  const[totalGames, setTotalGames] = useState(0);
   const calculateWinner = (squares) => {
     for (let combo of WINNING_COMBINATIONS) {
       const [a, b, c, d] = combo;
@@ -102,6 +102,10 @@ const AI_Xtreme4x4 = () => {
     new Audio("/click-sound.mp3").play();
     makeMove(index, "X");
   };
+
+  useEffect(()=>{
+  setTotalGames(xScore+oScore)
+  },[xScore,oScore])
 
   const restartGame = () => {
     setBoard(Array(16).fill(""));
@@ -189,6 +193,10 @@ const AI_Xtreme4x4 = () => {
         <button onClick={() => { setXScore(0); setOScore(0); }} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
           Reset Scores
         </button>
+      </div>
+
+      <div className="text-lg text-center mb-4">
+        <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>
       </div>
 
       {/* Board */}
