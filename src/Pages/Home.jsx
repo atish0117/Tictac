@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaSun } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
+import {ScoreBoard2} from '../Components/ScoreBoard'
 const WINNING_COMBINATIONS = [
   [0, 1, 2],
   [3, 4, 5],
@@ -147,45 +148,7 @@ const TicTacToe = () => {
       </h1>
 
        {/* Scoreboard */}
-       <div className="mb-6 w-full max-w-xl bg-white dark:bg-gray-700 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className={`flex-1 text-center ${xScore > oScore ? "text-green-600" : ""}`}>
-          <h2 className="text-lg font-bold flex items-center justify-center gap-2">
-            🧑 Player (X)
-          </h2>
-          <p className="text-3xl font-extrabold">{xScore}</p>
-          <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">
-            <div
-              className="h-full bg-blue-500 transition-all duration-500"
-              style={{ width: `${xScore + oScore === 0 ? 50 : (xScore / (xScore + oScore)) * 100}%` }}
-            ></div>
-          </div>
-        </div>
-
-        <div className={`flex-1 text-center ${oScore > xScore ? "text-green-600" : ""}`}>
-          <h2 className="text-lg font-bold flex items-center justify-center gap-2">
-          🧑 Player (O)
-          </h2>
-          <p className="text-3xl font-extrabold">{oScore}</p>
-          <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">
-            <div
-              className="h-full bg-pink-500 transition-all duration-500"
-              style={{ width: `${xScore + oScore === 0 ? 50 : (oScore / (xScore + oScore)) * 100}%` }}
-            ></div>
-          </div>
-        </div>
-
-      
-        <button
-          onClick={() => {
-            setXScore(0);
-            setOScore(0);
-          }}
-          className="bg-red-500 text-white font-medium px-4 py-2 rounded hover:bg-red-600 transition shadow"
-          title="Reset both scores to zero"
-        >
-          Reset Scores
-        </button>
-      </div>
+       <ScoreBoard2 xScore={xScore} oScore={oScore} resetScores={() => { setXScore(0); setOScore(0); }} />
 
       <div className="text-lg text-center mb-4">
         <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>
@@ -212,7 +175,7 @@ const TicTacToe = () => {
               className={`w-24 h-24 flex items-center justify-center 
                 text-4xl font-extrabold border-2 rounded-xl
                 ${value === "X" ? "text-blue-600" : "text-pink-500"} 
-                ${!value ? "hover:shadow-2xl hover:scale-105 cursor-pointer" : ""}
+                ${!value ? "hover:shadow-2xl hover:scale-105 cursor-pointer hover:bg-gray-300" : ""}
                 ${isLight(index) ? "bg-gray-300 opacity-70" : "bg-white"}
                 shadow-lg transition-all duration-300 ease-in-out select-none`}
               style={{ backgroundColor: boxColor }} // Apply the winning color here

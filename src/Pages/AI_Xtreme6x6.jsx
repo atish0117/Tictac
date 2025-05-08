@@ -194,9 +194,9 @@ const AI_Xtreme6x6 = () => {
 
   return (
     <div className={`min-h-screen flex flex-col items-center justify-center ${isDarkMode ? "bg-gray-900 text-white" : "bg-gradient-to-br from-yellow-100 to-pink-200"} p-4`}>
-      <h1 className="text-4xl font-bold mb-6 drop-shadow-md">Xtreme 6x6 Tic-Tac-Toe</h1>
-
-      <div className="mb-4 w-full max-w-4xl bg-white dark:bg-gray-800 rounded-xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+      <h1 className="text-4xl font-bold mb-6 drop-shadow-md">Xtreme 6x6 Tic-Tac-Toe (AI Mode)</h1>
+        {/* Scoreboard */}
+      <div className="mb-4 w-full max-w-xl bg-white dark:bg-gray-800 rounded-xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className={`flex-1 text-center ${xScore > oScore ? "text-green-600" : ""}`}>
           <h2 className="text-lg font-bold">🧑 Player (X)</h2>
           <p className="text-3xl font-extrabold">{xScore}</p>
@@ -210,17 +210,26 @@ const AI_Xtreme6x6 = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-6 gap-2 bg-amber-100 rounded-xl p-4 shadow-inner">
+      <div className="grid grid-cols-6 gap-2 rounded-xl p-4 shadow-inner"
+       style={{ 
+        boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.4 )',
+        backdropFilter: 'blur(4px)',
+        WebkitBackdropFilter: 'blur(4px)',
+        background: 'rgba( 250, 242, 242, 0.05 )',
+        borderRadius: '10px',
+        border: '1px solid rgba( 255, 255, 255, 0.18 )',
+      }}
+      >
       {board.map((val, idx) => {
   const isWinning = winningCombination.includes(idx);
-  const bgColor = isWinning ? winningColor : isLight(idx) ? "bg-gray-300 opacity-70" : "bg-white";
+  const bgColor = isWinning ? winningColor : "";
   return (
     <div
     key={idx}
     onClick={() => handleBoxClick(idx)}
-    className={`w-24 h-24 flex items-center justify-center text-4xl font-extrabold border-2 rounded-xl 
+    className={`w-16 h-16 md:w-18 md:h-18 flex items-center justify-center text-4xl font-extrabold border-2 rounded-xl 
     ${val === "X" ? "text-blue-600" : "text-pink-500"} 
-    ${!val ? "hover:shadow-2xl hover:scale-105 cursor-pointer hover:bg-gray-200" : ""} 
+    ${!val ? "hover:shadow-2xl hover:scale-105 cursor-pointer hover:bg-gray-300" : ""} 
     ${isLight(idx) ? "bg-gray-300 opacity-70" : "bg-white"} 
     transition-all duration-300 select-none shadow-md`}
     style={{ backgroundColor: bgColor }}
@@ -232,7 +241,7 @@ const AI_Xtreme6x6 = () => {
 
       </div>
 
-      <div className="mt-6 flex flex-col items-center gap-2">
+      <div className="mt-2 flex flex-col items-center gap-2">
         {winner && winner !== "Draw" && (
           <div className="text-2xl font-semibold text-green-600 animate-bounce">Winner: {winner}</div>
         )}
