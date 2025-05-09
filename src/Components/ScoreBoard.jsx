@@ -1,30 +1,52 @@
-// import React from 'react'
-
-// export const ScoreBoard = (prop) => {
-//   return (
-//     <>  
-//         <div>ScoreBoard</div>
-//         {/* AI_Xtreme6x6 */}
-//           {/* Scoreboard */}
-//       <div className="mb-4 w-full max-w-xl bg-white dark:bg-gray-800 rounded-xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
-//         <div className={`flex-1 text-center ${xScore > oScore ? "text-green-600" : ""}`}>
-//           <h2 className="text-lg font-bold">🧑 Player (X)</h2>
-//           <p className="text-3xl font-extrabold">{xScore}</p>
-//         </div>
-//         <div className={`flex-1 text-center ${oScore > xScore ? "text-green-600" : ""}`}>
-//           <h2 className="text-lg font-bold">🤖 Computer (O)</h2>
-//           <p className="text-3xl font-extrabold">{oScore}</p>
-//         </div>
-//         <button onClick={() => { setXScore(0); setOScore(0); }} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-//           Reset Scores
-//         </button>
-//       </div>
-//     </>
-
-// )
-// }
-
 import React from 'react'
+
+export const ScoreBoard = (prop) => {
+  return (
+    <>  
+        <div>ScoreBoard</div>
+        {/* score board for AI_Xtreme */}
+          {/* Scoreboard */}
+          <div className="mb-6 w-full max-w-xl bg-white dark:bg-gray-700 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+  <div className={`flex-1 text-center ${xWins > oWins ? "text-green-600" : ""}`}>
+    <h2 className="text-lg font-bold flex items-center justify-center gap-2">
+      🧑 Player (X)
+    </h2>
+    <p className="text-3xl font-extrabold">{xWins}</p>
+    <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">
+      <div
+        className="h-full bg-blue-500 transition-all duration-500"
+        style={{ width: `${xWins + oWins === 0 ? 50 : (xWins / (xWins + oWins)) * 100}%` }}
+      ></div>
+    </div>
+  </div>
+
+  <div className={`flex-1 text-center ${oWins > xWins ? "text-green-600" : ""}`}>
+    <h2 className="text-lg font-bold flex items-center justify-center gap-2">
+      🤖 Computer (O)
+    </h2>
+    <p className="text-3xl font-extrabold">{oWins}</p>
+    <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">
+      <div
+        className="h-full bg-pink-500 transition-all duration-500"
+        style={{ width: `${xWins + oWins === 0 ? 50 : (oWins / (xWins + oWins)) * 100}%` }}
+      ></div>
+    </div>
+  </div>
+
+  <button
+    onClick={resetScores}
+    className="bg-red-500 text-white font-medium px-4 py-2 rounded hover:bg-red-600 transition shadow"
+    title="Reset both scores to zero"
+  >
+    Reset Scores
+  </button>
+</div>
+    </>
+
+)
+}
+
+
 
 export const ScoreBoard2 = ({ xScore, oScore, resetScores }) => {
   return (
