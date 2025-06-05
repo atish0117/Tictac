@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaSun } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
-import {ScoreBoard2} from '../Components/ScoreBoard'
+import {ScoreBoard1} from '../Components/ScoreBoard'
 const WINNING_COMBINATIONS = [
   [0, 1, 2],
   [3, 4, 5],
@@ -148,7 +148,7 @@ const TicTacToe = () => {
       </h1>
 
        {/* Scoreboard */}
-       <ScoreBoard2 xScore={xScore} oScore={oScore} resetScores={() => { setXScore(0); setOScore(0); }} />
+       <ScoreBoard1 xScore={xScore} oScore={oScore} resetScores={() => { setXScore(0); setOScore(0); }} />
 
       <div className="text-lg text-center mb-4">
         <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>

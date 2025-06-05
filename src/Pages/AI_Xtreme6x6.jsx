@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaSun } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
+import { ScoreBoard2 } from "../Components/ScoreBoard";
 
 const SIZE = 6;
 const getRandomColor = () => {
@@ -192,24 +193,16 @@ const AI_Xtreme6x6 = () => {
     }
   }, [isXNext, board, winner]);
 
+  const resetScores=()=>{
+    setXScore(0)
+    setOScore(0)
+  }
+
   return (
     <div className={`min-h-screen flex flex-col items-center justify-center ${isDarkMode ? "bg-gray-900 text-white" : "bg-gradient-to-br from-yellow-100 to-pink-200"} p-4`}>
       <h1 className="text-4xl font-bold mb-6 drop-shadow-md">Xtreme 6x6 Tic-Tac-Toe (AI Mode)</h1>
         {/* Scoreboard */}
-      <div className="mb-4 w-full max-w-xl bg-white dark:bg-gray-800 rounded-xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className={`flex-1 text-center ${xScore > oScore ? "text-green-600" : ""}`}>
-          <h2 className="text-lg font-bold">🧑 Player (X)</h2>
-          <p className="text-3xl font-extrabold">{xScore}</p>
-        </div>
-        <div className={`flex-1 text-center ${oScore > xScore ? "text-green-600" : ""}`}>
-          <h2 className="text-lg font-bold">🤖 Computer (O)</h2>
-          <p className="text-3xl font-extrabold">{oScore}</p>
-        </div>
-        <button onClick={() => { setXScore(0); setOScore(0); }} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-          Reset Scores
-        </button>
-      </div>
-
+     <ScoreBoard2 xScore={xScore} oScore={oScore} resetScores={resetScores}/>
       <div className="grid grid-cols-6 gap-2 rounded-xl p-4 shadow-inner"
        style={{ 
         boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.4 )',

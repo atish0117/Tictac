@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaSun } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
+import { ScoreBoard2 } from "../Components/ScoreBoard";
 
 const WINNING_COMBINATIONS = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -20,8 +21,8 @@ const Computer = () => {
   const [winningColor, setWinningColor] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [turnChanged, setTurnChanged] = useState(false);
-  const [xWins, setXWins] = useState(0);
-  const [oWins, setOWins] = useState(0);
+  const [xScore, setXScore] = useState(0);
+  const [oScore, setOScore] = useState(0);
   const [totalGames, setTotalGames] = useState(0);
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
@@ -114,8 +115,8 @@ const Computer = () => {
       setWinningCombination(result.combination);
       setWinningColor(getRandomColor());
       new Audio("/win-sound.mp3").play();
-      if (result.winner === "X") setXWins((prev) => prev + 1);
-      if (result.winner === "O") setOWins((prev) => prev + 1);
+      if (result.winner === "X") setXScore((prev) => prev + 1);
+      if (result.winner === "O") setOScore((prev) => prev + 1);
     } else {
       setIsXNext(true);
       setTurnChanged(true);
@@ -145,8 +146,8 @@ const Computer = () => {
       setWinningCombination(result.combination);
       setWinningColor(getRandomColor());
       new Audio("/win-sound.mp3").play();
-      if (result.winner === "X") setXWins((prev) => prev + 1);
-      if (result.winner === "O") setOWins((prev) => prev + 1);
+      if (result.winner === "X") setXScore((prev) => prev + 1);
+      if (result.winner === "O") setOScore((prev) => prev + 1);
     } else {
       setIsXNext(false);
       setTurnChanged(true);
@@ -161,8 +162,8 @@ const Computer = () => {
 
 
   useEffect(()=>{
-    setTotalGames(xWins+oWins)
-  },[xWins,oWins])
+    setTotalGames(xScore+oScore)
+  },[xScore,oScore])
 
 
   const restartGame = () => {
@@ -179,8 +180,8 @@ const Computer = () => {
   };
 
   const resetScores = () => {
-    setXWins(0);
-    setOWins(0);
+    setXScore(0);
+    setOScore(0);
   };
 
   const toggleDarkMode = () => {
@@ -198,41 +199,7 @@ const Computer = () => {
       </h1>
 
       {/* Scoreboard */}
-<div className="mb-6 w-full max-w-xl bg-white dark:bg-gray-700 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
-  <div className={`flex-1 text-center ${xWins > oWins ? "text-green-600" : ""}`}>
-    <h2 className="text-lg font-bold flex items-center justify-center gap-2">
-      🧑 Player (X)
-    </h2>
-    <p className="text-3xl font-extrabold">{xWins}</p>
-    <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">
-      <div
-        className="h-full bg-blue-500 transition-all duration-500"
-        style={{ width: `${xWins + oWins === 0 ? 50 : (xWins / (xWins + oWins)) * 100}%` }}
-      ></div>
-    </div>
-  </div>
-
-  <div className={`flex-1 text-center ${oWins > xWins ? "text-green-600" : ""}`}>
-    <h2 className="text-lg font-bold flex items-center justify-center gap-2">
-      🤖 Computer (O)
-    </h2>
-    <p className="text-3xl font-extrabold">{oWins}</p>
-    <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">
-      <div
-        className="h-full bg-pink-500 transition-all duration-500"
-        style={{ width: `${xWins + oWins === 0 ? 50 : (oWins / (xWins + oWins)) * 100}%` }}
-      ></div>
-    </div>
-  </div>
-
-  <button
-    onClick={resetScores}
-    className="bg-red-500 text-white font-medium px-4 py-2 rounded hover:bg-red-600 transition shadow"
-    title="Reset both scores to zero"
-  >
-    Reset Scores
-  </button>
-</div>
+          <ScoreBoard2 xScore={xScore} oScore={oScore} resetScores={resetScores}/>
 
 <div className="text-lg text-center mb-4">
         <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>
