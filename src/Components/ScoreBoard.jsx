@@ -4,7 +4,6 @@ import React from 'react'
 export const ScoreBoard1 = ({ xScore, oScore, resetScores }) => {
   return (
     <>   
-    <div>ScoreBoard2</div>
         {/* home */}
       {/* Scoreboard */}
       <div className="mb-6 w-full max-w-xl bg-white dark:bg-gray-700 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -52,7 +51,6 @@ export const ScoreBoard1 = ({ xScore, oScore, resetScores }) => {
 export const ScoreBoard2 = ( {xScore, oScore, resetScores }) => {
   return (
     <>  
-        <div>ScoreBoard</div>
         {/* score board for AI_Xtreme */}
           {/* Scoreboard */}
           <div className="mb-6 w-full max-w-xl bg-white dark:bg-gray-700 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -99,30 +97,55 @@ export const ScoreBoard2 = ( {xScore, oScore, resetScores }) => {
 
 
 
-// import React from 'react'
 
-// export const ScoreBoard3 = () => {
-//   return (
-//     <>
-//     <div>ScoreBoard3</div>
-//       {/* Scoreboard */}
-//       <div className="w-1/2 flex justify-between items-center bg-white p-4 rounded-lg shadow-lg mb-6">
-//         <div className="text-center">
-//           <p className="text-xl font-bold text-gray-800">🧑 Player 1(X)</p>
-//           <p className="text-3xl font-extrabold text-blue-600">{xScore}</p>
-//           <p className="text-lg text-gray-600">Wins</p>
-//         </div>
-//         <div className="text-center">
-//           <p className="text-xl font-bold text-gray-800">🧑 Player 2(O)</p>
-//           <p className="text-3xl font-extrabold text-red-600">{oScore}</p>
-//           <p className="text-lg text-gray-600">Wins</p>
-//         </div>
-//         <div className="text-center">
-//           <p className="text-xl font-bold text-gray-800">🤝 Draws</p>
-//           <p className="text-3xl font-extrabold text-yellow-600">{draws}</p>
-//         </div>
-//       </div>
-//     </>
-//   )
-// }
 
+export const ScoreBoard3 = () => {
+  return (
+    <>
+    <div>ScoreBoard3</div>
+      {/* Scoreboard */}
+      <div className="w-1/2 flex justify-between items-center bg-white p-4 rounded-lg shadow-lg mb-6">
+        <div className="text-center">
+          <p className="text-xl font-bold text-gray-800">🧑 Player 1(X)</p>
+          <p className="text-3xl font-extrabold text-blue-600">{xScore}</p>
+          <p className="text-lg text-gray-600">Wins</p>
+        </div>
+        <div className="text-center">
+          <p className="text-xl font-bold text-gray-800">🧑 Player 2(O)</p>
+          <p className="text-3xl font-extrabold text-red-600">{oScore}</p>
+          <p className="text-lg text-gray-600">Wins</p>
+        </div>
+        <div className="text-center">
+          <p className="text-xl font-bold text-gray-800">🤝 Draws</p>
+          <p className="text-3xl font-extrabold text-yellow-600">{draws}</p>
+        </div>
+      </div>
+    </>
+  )
+}
+
+
+export const ScoreBoard4 =()=>{
+
+  return(
+  <>
+  <div className="w-1/2 flex justify-between items-center bg-white p-4 rounded-lg shadow-lg mb-6">
+        <div className="text-center">
+          <p className="text-xl font-bold text-gray-800">🧑 Player (X)</p>
+          <p className="text-3xl font-extrabold text-blue-600">{xWins}</p>
+          <p className="text-lg text-gray-600">Wins</p>
+        </div>
+        <div className="text-center">
+          <p className="text-xl font-bold text-gray-800">🤖 Computer (O)</p>
+          <p className="text-3xl font-extrabold text-red-600">{oWins}</p>
+          <p className="text-lg text-gray-600">Wins</p>
+        </div>
+        <div className="text-center">
+          <p className="text-xl font-bold text-gray-800">🤝 Draws</p>
+          <p className="text-3xl font-extrabold text-yellow-600">{draws}</p>
+        </div>
+      </div>
+      </>
+  )
+
+}

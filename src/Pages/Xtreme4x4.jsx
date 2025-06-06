@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaSun } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
-
+import { ScoreBoard1 } from "../Components/ScoreBoard";
 const WINNING_COMBINATIONS = [
   // Horizontal
   [0, 1, 2, 3],
@@ -154,7 +154,7 @@ const Xtreme4x4 = () => {
       <h1 className="text-4xl font-bold mb-6 text-gray-800 drop-shadow-md">Xtreme Tic-Tac-Toe</h1>
 
       {/* Scoreboard */}
-      <div className="mb-6 w-full max-w-xl bg-white dark:bg-gray-700 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* <div className="mb-6 w-full max-w-xl bg-white dark:bg-gray-700 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className={`flex-1 text-center ${xScore > oScore ? "text-green-600" : ""}`}>
           <h2 className="text-lg font-bold flex items-center justify-center gap-2">
             🧑 Player (X)
@@ -191,7 +191,9 @@ const Xtreme4x4 = () => {
         >
           Reset Scores
         </button>
-      </div>
+      </div> */}
+       <ScoreBoard1 xScore={xScore} oScore={oScore} resetScores={() => { setXScore(0); setOScore(0); }} />
+
 
       <div className="text-lg text-center mb-4">
         <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>
