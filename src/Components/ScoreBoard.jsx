@@ -10,7 +10,7 @@ export const ScoreBoard1 = ({ xScore, oScore, resetScores }) => {
 
   return (
     <div className="w-full max-w-xl mx-auto p-4">
-      <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+      <div className="bg-white dark:bg-gray-700 dark:text-black rounded-xl shadow-lg p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
         {/* Player X */}
         <div className={`flex-1 text-center ${xScore > oScore ? "text-green-600" : "text-gray-700 dark:text-gray-100"}`}>
           <h2 className="text-md sm:text-lg font-semibold flex justify-center items-center gap-1">

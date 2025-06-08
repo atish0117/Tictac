@@ -199,7 +199,7 @@ const AI_Xtreme6x6 = () => {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col items-center justify-center ${isDarkMode ? "bg-gray-900 text-white" : "bg-gradient-to-br from-yellow-100 to-pink-200"} p-4`}>
+    <div className={`min-h-screen flex flex-col items-center justify-center ${isDarkMode ? "bg-gray-900 text-white" : "bg-gradient-to-br from-yellow-100 to-pink-200"} p-6`}>
       <h1 className="text-4xl font-bold mb-6 drop-shadow-md">Xtreme 6x6 Tic-Tac-Toe (AI Mode)</h1>
         {/* Scoreboard */}
      <ScoreBoard2 xScore={xScore} oScore={oScore} resetScores={resetScores}/>
