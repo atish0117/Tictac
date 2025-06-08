@@ -151,7 +151,7 @@ const Xtreme4x4 = () => {
         isDarkMode ? "bg-gray-800 text-white" : "bg-gradient-to-br from-blue-100 to-purple-200"
       } p-6`}
     >
-      <h1 className="text-4xl font-bold mb-6 text-gray-800 drop-shadow-md">Xtreme Tic-Tac-Toe</h1>
+      <h1 className="text-4xl font-bold mb-6 text-gray-800 drop-shadow-md">Xtreme Tic-Tac-Toe (PvP)</h1>
 
       {/* Scoreboard */}
       {/* <div className="mb-6 w-full max-w-xl bg-white dark:bg-gray-700 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">

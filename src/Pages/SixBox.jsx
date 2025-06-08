@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { ScoreBoard3 } from '../Components/ScoreBoard';
 const TicTacToe6x6 = () => {
   const size = 6;
   const totalCells = size * size;
@@ -152,11 +152,11 @@ const TicTacToe6x6 = () => {
   };
 
   return (
-    <div className="flex flex-col items-center pt-10 bg-gradient-to-br from-blue-100 to-purple-200 ">
-      <h1 className="text-3xl font-bold mb-4">6x6 Tic Tac Toe (PVP)</h1>
+    <div className="flex flex-col items-center bg-gradient-to-br from-blue-100 to-purple-200 ">
+      <h1 className="text-3xl font-bold mb-4">6x6 Tic Tac Toe (PvP)</h1>
 
       {/* Detailed Scoreboard */}
-      <div className="w-1/2 flex justify-between items-center bg-white p-4 rounded-lg shadow-lg mb-6">
+      {/* <div className="w-1/2 flex justify-between items-center bg-white p-4 rounded-lg shadow-lg mb-6">
   <div className="text-center">
     <p className="text-xl font-bold text-gray-800">🧑 Player (X)</p>
     <p className="text-3xl font-extrabold text-blue-600">{xWins}</p>
@@ -171,9 +171,15 @@ const TicTacToe6x6 = () => {
     <p className="text-xl font-bold text-gray-800">🤝 Draws</p>
     <p className="text-3xl font-extrabold text-yellow-600">{draws}</p>
   </div>
-</div>
-
-
+ 
+      <button
+        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+        onClick={resetScores}
+      >
+        Reset Scores
+      </button>
+</div> */}
+    <ScoreBoard3 xWins={xWins} oWins={oWins} draws={draws} resetScores={resetScores}/>
 
 
       <div className="text-lg text-center mb-4">
@@ -215,13 +221,7 @@ const TicTacToe6x6 = () => {
         Restart Game
       </button>
 
-      {/* Reset Scores Button */}
-      <button
-        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        onClick={resetScores}
-      >
-        Reset Scores
-      </button>
+      
     </div>
   );
 };

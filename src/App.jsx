@@ -1,7 +1,7 @@
 import React from 'react'
 import TicTacToe from './Pages/Home'
 import Computer from './Pages/Computer'
-import {Error} from './Pages/Error'
+import ErrorPage from './Pages/ErrorPage'
 import Navbar from './Components/Navbar'
 import TicTacToe4x4 from './Pages/TicTacToe4x4'
 import AI_TicTacToe4x4 from './Pages/AI_TicTacToe4x4'
@@ -12,6 +12,7 @@ import AI_TicTacToe6x6 from "./Pages/TicTacToe6x6"
 import AI_Xtreme6x6 from './Pages/AI_Xtreme6x6'
 import Xtreme6x6 from './Pages/Xtreme6x6'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
 export const App = () => {
 
   return (
@@ -29,7 +30,7 @@ export const App = () => {
       <Route path='TicTacToe6x6' element={<AI_TicTacToe6x6/>}/>
       <Route path='AI_Xtreme6x6' element={<AI_Xtreme6x6/>}/>
       <Route path='Xtreme6x6' element={<Xtreme6x6/>}/>
-      <Route path='*' element={<Error/>}/>
+      <Route path="*" element={<ErrorPage statusCode={404} />} />
     </Routes>
     </BrowserRouter>
     </>

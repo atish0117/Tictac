@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { ScoreBoard4 } from '../Components/ScoreBoard';
 const AI_TicTacToe4x4 = () => {
   const size = 4;
   const totalCells = size * size;
@@ -211,7 +211,7 @@ const AI_TicTacToe4x4 = () => {
     <div className="flex flex-col items-center bg-gradient-to-br from-blue-100 to-purple-200">
       <h1 className="text-3xl font-bold mb-4">4x4 Tic Tac Toe (AI Mode)</h1>
       {/* Scoreboard */}
-      <div className="w-1/2 flex justify-between items-center bg-white p-4 rounded-lg shadow-lg mb-6">
+      {/* <div className="w-1/2 flex justify-between items-center bg-white p-4 rounded-lg shadow-lg mb-6">
         <div className="text-center">
           <p className="text-xl font-bold text-gray-800">🧑 Player (X)</p>
           <p className="text-3xl font-extrabold text-blue-600">{xWins}</p>
@@ -226,7 +226,17 @@ const AI_TicTacToe4x4 = () => {
           <p className="text-xl font-bold text-gray-800">🔄 Draws</p>
           <p className="text-3xl font-extrabold text-yellow-600">{draws}</p>
         </div>
-      </div>
+
+        <button
+        className=" px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+        onClick={resetScores}
+      >
+        🔄
+      </button>
+      </div> */}
+
+          <ScoreBoard4 resetScores={resetScores} xWins={xWins} oWins={oWins} draws={draws}/>
+
 
       <div className="text-lg text-center mb-4">
         <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>
@@ -265,12 +275,7 @@ const AI_TicTacToe4x4 = () => {
         Restart Game
       </button>
 
-      <button
-        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        onClick={resetScores}
-      >
-        Reset Scores
-      </button>
+      
     </div>
   );
 };

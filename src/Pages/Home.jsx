@@ -144,7 +144,7 @@ const TicTacToe = () => {
   return (
     <div className={`min-h-screen flex flex-col items-center justify-center ${isDarkMode ? "bg-gray-800 text-white" : "bg-gradient-to-br from-blue-100 to-purple-200"} p-6`}>
       <h1 className="text-4xl font-bold mb-6 text-gray-800 drop-shadow-md">
-      Xtreme Tic-Tac-Toe
+      Xtreme Tic-Tac-Toe (PvP)
       </h1>
 
        {/* Scoreboard */}
