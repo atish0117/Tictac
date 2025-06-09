@@ -3,17 +3,24 @@ import React from 'react'
 
 // import React from "react";
 
-export const ScoreBoard1 = ({ xScore, oScore, resetScores }) => {
+export const ScoreBoard1 = ({ xScore, oScore, resetScores,isDarkMode }) => {
   const total = xScore + oScore;
   const xPercentage = total === 0 ? 50 : (xScore / total) * 100;
   const oPercentage = total === 0 ? 50 : (oScore / total) * 100;
 
   return (
-    <div className="w-full max-w-xl mx-auto p-4">
-      <div className="bg-white dark:bg-gray-700 dark:text-black rounded-xl shadow-lg p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+    <div className={`w-full max-w-xl mx-auto  p-4`}>
+      <div className={` ${isDarkMode ? "bg-gray-600 text-gray-100" : "bg-gradient-to-br from-blue-100 to-purple-200"} rounded-xl shadow-lg p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6`}>
         {/* Player X */}
-        <div className={`flex-1 text-center ${xScore > oScore ? "text-green-600" : "text-gray-700 dark:text-gray-100"}`}>
-          <h2 className="text-md sm:text-lg font-semibold flex justify-center items-center gap-1">
+<div
+  className={`flex-1 text-center ${
+    xScore > oScore
+      ? "text-green-600"
+      : isDarkMode
+      ? "bg-gray-600 text-gray-100"
+      : "bg-gradient-to-br from-blue-100 to-purple-200"
+  }`}
+>          <h2 className="text-md sm:text-lg font-semibold flex justify-center items-center gap-1">
             🧑 Player (X)
           </h2>
           <p className="text-3xl sm:text-4xl font-bold">{xScore}</p>

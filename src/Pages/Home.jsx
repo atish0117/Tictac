@@ -148,7 +148,7 @@ const TicTacToe = () => {
       </h1>
 
        {/* Scoreboard */}
-       <ScoreBoard1 xScore={xScore} oScore={oScore} resetScores={() => { setXScore(0); setOScore(0); }} />
+       <ScoreBoard1 xScore={xScore} oScore={oScore} isDarkMode={isDarkMode} resetScores={() => { setXScore(0); setOScore(0); }} />
 
       <div className="text-lg text-center mb-4">
         <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>
