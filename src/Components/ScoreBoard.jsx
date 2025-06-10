@@ -1,24 +1,94 @@
 import React from 'react'
+import { useTheme } from './Context/ThemeContext';
 
-
-// import React from "react";
-
-export const ScoreBoard1 = ({ xScore, oScore, resetScores,isDarkMode }) => {
+export const ScoreBoard1 = ({ xScore, oScore, resetScores }) => {
+  const {isDarkMode}=useTheme()
   const total = xScore + oScore;
   const xPercentage = total === 0 ? 50 : (xScore / total) * 100;
   const oPercentage = total === 0 ? 50 : (oScore / total) * 100;
 
   return (
     <div className={`w-full max-w-xl mx-auto  p-4`}>
-      <div className={` ${isDarkMode ? "bg-gray-600 text-gray-100" : "bg-gradient-to-br from-blue-100 to-purple-200"} rounded-xl shadow-lg p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6`}>
+      <div className={` ${isDarkMode ? "bg-gray-900 text-gray-100" : "bg-white"} rounded-xl shadow-lg p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6`}>
         {/* Player X */}
 <div
   className={`flex-1 text-center ${
     xScore > oScore
       ? "text-green-600"
       : isDarkMode
-      ? "bg-gray-600 text-gray-100"
-      : "bg-gradient-to-br from-blue-100 to-purple-200"
+      ? "text-gray-100"
+      : "text-gray-700"
+  }`}
+>
+          
+<h2 className="text-md sm:text-lg font-semibold flex justify-center items-center gap-1">
+            🧑 Player (X)
+          </h2>
+          <p className="text-3xl sm:text-4xl font-bold">{xScore}</p>
+          <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">
+            <div
+              className="h-full bg-blue-500 transition-all duration-500"
+              style={{ width: `${xPercentage}%` }}
+            ></div>
+          </div>
+        </div>
+
+        {/* Reset Button */}
+        <div className="flex justify-center sm:justify-center">
+          <button
+            onClick={resetScores}
+            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 shadow-md text-sm sm:text-base"
+            title="Reset Scores"
+          >
+            🔄 Reset
+          </button>
+        </div>
+
+        {/* Player O */}
+<div
+  className={`flex-1 text-center ${
+    oScore > xScore
+      ? "text-green-600"
+      : isDarkMode
+      ? "text-gray-100"
+      : "text-gray-700"
+  }`}
+>
+           <h2 className="text-md sm:text-lg font-semibold flex justify-center items-center gap-1">
+            🧑 Player (O)
+          </h2>
+          <p className="text-3xl sm:text-4xl font-bold">{oScore}</p>
+          <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">
+            <div
+              className="h-full bg-pink-500 transition-all duration-500"
+              style={{ width: `${oPercentage}%` }}
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+
+export const ScoreBoard2 = ({ xScore, oScore, resetScores }) => {
+  const total = xScore + oScore;
+  const xPercentage = total === 0 ? 50 : (xScore / total) * 100;
+  const oPercentage = total === 0 ? 50 : (oScore / total) * 100;
+  const {isDarkMode}=useTheme()
+
+  return (
+    <div className="w-full max-w-xl mx-auto p-4">
+      <div className={` ${isDarkMode ? "bg-gray-900 text-gray-100" : "bg-white"} rounded-xl shadow-lg p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6`}>
+        {/* Player (X) */}
+<div
+  className={`flex-1 text-center ${
+    xScore > oScore
+      ? "text-green-600"
+      : isDarkMode
+      ? "text-gray-100"
+      : "text-gray-700"
   }`}
 >          <h2 className="text-md sm:text-lg font-semibold flex justify-center items-center gap-1">
             🧑 Player (X)
@@ -43,62 +113,16 @@ export const ScoreBoard1 = ({ xScore, oScore, resetScores,isDarkMode }) => {
           </button>
         </div>
 
-        {/* Player O */}
-        <div className={`flex-1 text-center ${oScore > xScore ? "text-green-600" : "text-gray-700 dark:text-gray-100"}`}>
-          <h2 className="text-md sm:text-lg font-semibold flex justify-center items-center gap-1">
-            🧑 Player (O)
-          </h2>
-          <p className="text-3xl sm:text-4xl font-bold">{oScore}</p>
-          <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">
-            <div
-              className="h-full bg-pink-500 transition-all duration-500"
-              style={{ width: `${oPercentage}%` }}
-            ></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-
-
-export const ScoreBoard2 = ({ xScore, oScore, resetScores }) => {
-  const total = xScore + oScore;
-  const xPercentage = total === 0 ? 50 : (xScore / total) * 100;
-  const oPercentage = total === 0 ? 50 : (oScore / total) * 100;
-
-  return (
-    <div className="w-full max-w-xl mx-auto p-4">
-      <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-        {/* Player (X) */}
-        <div className={`flex-1 text-center ${xScore > oScore ? "text-green-600" : "text-gray-800 dark:text-gray-100"}`}>
-          <h2 className="text-md sm:text-lg font-semibold flex justify-center items-center gap-1">
-            🧑 Player (X)
-          </h2>
-          <p className="text-3xl sm:text-4xl font-bold">{xScore}</p>
-          <div className="w-full h-2 bg-gray-300 rounded mt-2 overflow-hidden">
-            <div
-              className="h-full bg-blue-500 transition-all duration-500"
-              style={{ width: `${xPercentage}%` }}
-            ></div>
-          </div>
-        </div>
-
-        {/* Reset Button */}
-        <div className="flex justify-center sm:justify-center">
-          <button
-            onClick={resetScores}
-            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 shadow-md text-sm sm:text-base"
-            title="Reset Scores"
-          >
-            🔄 Reset
-          </button>
-        </div>
-
         {/* Computer (O) */}
-        <div className={`flex-1 text-center ${oScore > xScore ? "text-green-600" : "text-gray-800 dark:text-gray-100"}`}>
-          <h2 className="text-md sm:text-lg font-semibold flex justify-center items-center gap-1">
+<div
+  className={`flex-1 text-center ${
+    oScore > xScore
+      ? "text-green-600"
+      : isDarkMode
+      ? "text-gray-100"
+      : "text-gray-700"
+  }`}
+>          <h2 className="text-md sm:text-lg font-semibold flex justify-center items-center gap-1">
             🤖 Computer (O)
           </h2>
           <p className="text-3xl sm:text-4xl font-bold">{oScore}</p>

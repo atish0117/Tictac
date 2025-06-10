@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-
+import { ThemeToggleButton } from './ThemeToggleButton';
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -127,10 +127,12 @@ const Navbar = () => {
                         {item.label}
                       </NavLink>
                     ))}
+
                   </div>
                 )}
               </div>
             ))}
+            <ThemeToggleButton/>
           </div>
 
           {/* Mobile Hamburger */}

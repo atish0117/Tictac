@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaSun } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
 import {ScoreBoard1} from '../Components/ScoreBoard'
+import { useTheme } from "../Components/Context/ThemeContext";
 const WINNING_COMBINATIONS = [
   [0, 1, 2],
   [3, 4, 5],
@@ -23,12 +24,14 @@ const TicTacToe = () => {
   const [winner, setWinner] = useState(null);
   const [winningCombination, setWinningCombination] = useState([]); // Store winning combination
   const [winningColor, setWinningColor] = useState(""); // Store the color for the winning boxes
-  const [isDarkMode, setIsDarkMode] = useState(false); // For Dark Mode Toggle
+  // const [isDarkMode, setIsDarkMode] = useState(false); // For Dark Mode Toggle
   const [turnChanged, setTurnChanged] = useState(false); // For detecting turn change
   const[totalGames, setTotalGames] = useState(0)
  // Score state
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
+
+    const {isDarkMode}=useTheme()
 
   // Function to generate random color
   const getRandomColor = () => {
@@ -148,7 +151,7 @@ const TicTacToe = () => {
       </h1>
 
        {/* Scoreboard */}
-       <ScoreBoard1 xScore={xScore} oScore={oScore} isDarkMode={isDarkMode} resetScores={() => { setXScore(0); setOScore(0); }} />
+       <ScoreBoard1 xScore={xScore} oScore={oScore} resetScores={() => { setXScore(0); setOScore(0); }} />
 
       <div className="text-lg text-center mb-4">
         <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>

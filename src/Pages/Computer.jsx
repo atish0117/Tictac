@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaSun } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
 import { ScoreBoard2 } from "../Components/ScoreBoard";
+import { useTheme } from "../Components/Context/ThemeContext";
 
 const WINNING_COMBINATIONS = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -19,11 +20,13 @@ const Computer = () => {
   const [winner, setWinner] = useState(null);
   const [winningCombination, setWinningCombination] = useState([]);
   const [winningColor, setWinningColor] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  // const [isDarkMode, setIsDarkMode] = useState(false);
   const [turnChanged, setTurnChanged] = useState(false);
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
   const [totalGames, setTotalGames] = useState(0);
+
+  const {isDarkMode}=useTheme()
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
     let color = "#";
