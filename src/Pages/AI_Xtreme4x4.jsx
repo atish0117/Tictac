@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaSun } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
 import { ScoreBoard2 } from "../Components/ScoreBoard";
+import { useTheme } from "../Components/Context/ThemeContext";
 const WINNING_COMBINATIONS = [
   [0, 1, 2, 3],
   [4, 5, 6, 7],
@@ -34,11 +35,12 @@ const AI_Xtreme4x4 = () => {
   const [winner, setWinner] = useState(null);
   const [winningCombination, setWinningCombination] = useState([]);
   const [winningColor, setWinningColor] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [turnChanged, setTurnChanged] = useState(false);
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
   const[totalGames, setTotalGames] = useState(0);
+
+    const {isDarkMode}=useTheme()
   const calculateWinner = (squares) => {
     for (let combo of WINNING_COMBINATIONS) {
       const [a, b, c, d] = combo;
@@ -127,7 +129,6 @@ const AI_Xtreme4x4 = () => {
     return false;
   };
 
-  const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
 
   // Minimax AI (limited depth for performance)
   const minimax = (boardState, depth, isMaximizing) => {
@@ -230,9 +231,7 @@ const AI_Xtreme4x4 = () => {
           <button onClick={restartGame} className="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg">
             Restart
           </button>
-          <button onClick={toggleDarkMode} className="px-6 py-2 bg-gray-300 dark:bg-gray-600 hover:bg-gray-700 text-white rounded-lg">
-            {isDarkMode ? <FaSun color="yellow" size={24} /> : <MdDarkMode color="black" size={24} />}
-          </button>
+         
         </div>
       </div>
     </div>

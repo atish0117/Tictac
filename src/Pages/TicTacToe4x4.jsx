@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScoreBoard3 } from '../Components/ScoreBoard';
+import { useTheme } from '../Components/Context/ThemeContext';
 const TicTacToe4x4 = () => {
   const size = 4;
   const totalCells = size * size;
@@ -11,6 +12,7 @@ const TicTacToe4x4 = () => {
   const [draws, setDraws] = useState(0);
   const [totalGames, setTotalGames] = useState(0);
 
+    const {isDarkMode}=useTheme()
   const handleClick = (index) => {
     if (board[index] || winnerInfo.winner) return;
     const newBoard = [...board];
@@ -132,8 +134,10 @@ const TicTacToe4x4 = () => {
   };
 
   return (
-    <div className="flex flex-col items-center px-4
-              bg-gradient-to-br from-blue-100 to-purple-200">
+    <div className={`flex flex-col items-center px-4
+              ${
+        isDarkMode ? "bg-gray-800 text-white" : "bg-gradient-to-br from-blue-100 to-purple-200"
+      }`}>
       <h1 className="text-3xl font-bold mb-4 text-center">4x4 Tic Tac Toe (PvP)</h1>
 
       {/* Scoreboard */}

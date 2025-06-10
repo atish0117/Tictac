@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaSun } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
 import { ScoreBoard1 } from "../Components/ScoreBoard";
+import { useTheme } from "../Components/Context/ThemeContext";
 const WINNING_COMBINATIONS = [
   // Horizontal
   [0, 1, 2, 3],
@@ -30,13 +31,14 @@ const Xtreme4x4 = () => {
   const [winner, setWinner] = useState(null);
   const [winningCombination, setWinningCombination] = useState([]);
   const [winningColor, setWinningColor] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [turnChanged, setTurnChanged] = useState(false);
   const [totalGames, setTotalGames] = useState(0);
   // Score variables
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
 
+
+    const {isDarkMode}=useTheme()
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
     let color = "#";
@@ -141,9 +143,7 @@ const Xtreme4x4 = () => {
     return false;
   };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode((prev) => !prev);
-  };
+ 
 
   return (
     <div
@@ -249,13 +249,6 @@ const Xtreme4x4 = () => {
           className="mt-4 px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg shadow-md transition-all"
         >
           Restart
-        </button>
-
-        <button
-          onClick={toggleDarkMode}
-          className="mt-4 px-6 py-2 bg-gray-300 hover:bg-gray-700 text-white rounded-lg shadow-md transition-all"
-        >
-          {isDarkMode ? <FaSun color="yellow" size={30} /> : <MdDarkMode color="black" size={30} />}
         </button>
       </div>
     </div>

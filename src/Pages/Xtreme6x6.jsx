@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaSun } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
 import { ScoreBoard1 } from "../Components/ScoreBoard";
+import { useTheme } from "../Components/Context/ThemeContext";
 const generateWinningCombinations = () => {
     const size = 6;
     const winLength = 6;
@@ -49,9 +50,9 @@ const Xtreme6x6 = () => {
   const [winner, setWinner] = useState(null);
   const [winningCombination, setWinningCombination] = useState([]);
   const [winningColor, setWinningColor] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [turnChanged, setTurnChanged] = useState(false);
 
+    const {isDarkMode}=useTheme()
   // Score variables
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
@@ -158,9 +159,6 @@ const Xtreme6x6 = () => {
     return false;
   };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode((prev) => !prev);
-  };
 
   return (
     <div
@@ -265,12 +263,6 @@ const Xtreme6x6 = () => {
           Restart
         </button>
 
-        <button
-          onClick={toggleDarkMode}
-          className="mt-4 px-6 py-2 bg-gray-300 hover:bg-gray-700 text-white rounded-lg shadow-md transition-all"
-        >
-          {isDarkMode ? <FaSun color="yellow" size={30} /> : <MdDarkMode color="black" size={30} />}
-        </button>
       </div>
     </div>
   );

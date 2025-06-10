@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScoreBoard4 } from '../Components/ScoreBoard';
+import { useTheme } from '../Components/Context/ThemeContext';
 const AI_TicTacToe6x6 = () => {
   const size = 6;
   const totalCells = size * size;
@@ -12,6 +13,8 @@ const AI_TicTacToe6x6 = () => {
   const [totalGames, setTotalGames] = useState(0);
   const [difficulty, setDifficulty] = useState('hard'); // Default difficulty
   const [isAIThinking, setIsAIThinking] = useState(false); // State for showing AI thinking animation
+
+    const {isDarkMode}=useTheme()
 
   const handleClick = (index) => {
     if (board[index] || winnerInfo.winner || !isXNext) return;
@@ -215,8 +218,9 @@ const AI_TicTacToe6x6 = () => {
   };
 
   return (
-    <div className="flex flex-col items-center px-4
-              bg-gradient-to-br from-blue-100 to-purple-200">
+    <div className={`${
+        isDarkMode ? "bg-gray-800 text-white" : "bg-gradient-to-br from-blue-100 to-purple-200"
+      } flex flex-col items-center px-4`} >
       <h1 className="text-3xl font-bold mb-4">6x6 Tic Tac Toe (AI Mode)</h1>
          {/* Scoreboard */}
       {/* <div className="w-1/2 flex justify-between items-center bg-white p-4 rounded-lg shadow-lg mb-6">

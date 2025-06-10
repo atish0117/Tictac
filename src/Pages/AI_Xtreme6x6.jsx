@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaSun } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
 import { ScoreBoard2 } from "../Components/ScoreBoard";
+import { useTheme } from "../Components/Context/ThemeContext";
 
 const SIZE = 6;
 const getRandomColor = () => {
@@ -21,11 +22,11 @@ const AI_Xtreme6x6 = () => {
   const [winner, setWinner] = useState(null);
   const [winningCombination, setWinningCombination] = useState([]);
   const [winningColor, setWinningColor] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [turnChanged, setTurnChanged] = useState(false);
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
 
+    const {isDarkMode}=useTheme()
   const calculateWinner = (squares) => {
     const lines =generateWinningCombos(SIZE,6)
     for (let line of lines) {
@@ -146,7 +147,6 @@ const AI_Xtreme6x6 = () => {
     return false;
   };
 
-  const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
 
   const minimax = (boardState, depth, isMaximizing) => {
     const result = calculateWinner(boardState);
@@ -199,7 +199,7 @@ const AI_Xtreme6x6 = () => {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col items-center justify-center ${isDarkMode ? "bg-gray-900 text-white" : "bg-gradient-to-br from-yellow-100 to-pink-200"} p-6`}>
+    <div className={`min-h-screen flex flex-col items-center justify-center ${isDarkMode ? "bg-gray-800 text-white" : "bg-gradient-to-br from-yellow-100 to-pink-200"} p-6`}>
       <h1 className="text-4xl font-bold mb-6 drop-shadow-md">Xtreme 6x6 Tic-Tac-Toe (AI Mode)</h1>
         {/* Scoreboard */}
      <ScoreBoard2 xScore={xScore} oScore={oScore} resetScores={resetScores}/>
@@ -250,9 +250,7 @@ const AI_Xtreme6x6 = () => {
           <button onClick={restartGame} className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition">
             Restart Game
           </button>
-          <button onClick={toggleDarkMode} className="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-800 transition">
-            {isDarkMode ? <FaSun size={24} /> : <MdDarkMode size={24} />}
-          </button>
+         
         </div>
       </div>
     </div>
