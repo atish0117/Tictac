@@ -248,7 +248,7 @@ const AI_Xtreme6x6 = () => {
         )}
         <div className="flex gap-4 mt-4">
           <button onClick={restartGame} className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition">
-            Restart Game
+            Restart
           </button>
          
         </div>

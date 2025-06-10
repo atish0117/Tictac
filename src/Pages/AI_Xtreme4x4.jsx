@@ -183,7 +183,7 @@ const AI_Xtreme4x4 = () => {
   }
   return (
     <div className={`min-h-screen flex flex-col items-center justify-center ${isDarkMode ? "bg-gray-800 text-white" : "bg-gradient-to-br from-blue-100 to-purple-200"} p-6`}>
-      <h1 className="text-4xl font-bold mb-6 text-gray-800 drop-shadow-md dark:text-white">Xtreme Tic-Tac-Toe</h1>
+      <h1 className="text-4xl font-bold mb-6  drop-shadow-md ">Xtreme Tic-Tac-Toe</h1>
 
       {/* Scoreboard */}
       <ScoreBoard2 xScore={xScore} oScore={oScore} resetScore={resetScores} />

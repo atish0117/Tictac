@@ -20,7 +20,6 @@ const Computer = () => {
   const [winner, setWinner] = useState(null);
   const [winningCombination, setWinningCombination] = useState([]);
   const [winningColor, setWinningColor] = useState("");
-  // const [isDarkMode, setIsDarkMode] = useState(false);
   const [turnChanged, setTurnChanged] = useState(false);
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
@@ -187,9 +186,7 @@ const Computer = () => {
     setOScore(0);
   };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode((prev) => !prev);
-  };
+
 
   return (
     <div
@@ -197,7 +194,7 @@ const Computer = () => {
         isDarkMode ? "bg-gray-800 text-white" : "bg-gradient-to-br from-blue-100 to-purple-200"
       } p-6`}
     >
-      <h1 className="text-4xl font-bold mb-4 text-gray-800 dark:text-white">
+      <h1 className="text-4xl font-bold mb-4 ">
         Xtreme Tic-Tac-Toe
       </h1>
 
@@ -262,13 +259,6 @@ const Computer = () => {
           className="mt-2 px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg shadow-md transition-all"
         >
           Restart
-        </button>
-
-        <button
-          onClick={toggleDarkMode}
-          className="mt-2 px-6 py-2 bg-gray-300 hover:bg-gray-700 text-white rounded-lg shadow-md transition-all"
-        >
-          {isDarkMode ? <FaSun color="yellow" size={30} /> : <MdDarkMode color="black" size={30} />}
         </button>
         </div>
       </div>

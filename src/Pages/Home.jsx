@@ -24,7 +24,6 @@ const TicTacToe = () => {
   const [winner, setWinner] = useState(null);
   const [winningCombination, setWinningCombination] = useState([]); // Store winning combination
   const [winningColor, setWinningColor] = useState(""); // Store the color for the winning boxes
-  // const [isDarkMode, setIsDarkMode] = useState(false); // For Dark Mode Toggle
   const [turnChanged, setTurnChanged] = useState(false); // For detecting turn change
   const[totalGames, setTotalGames] = useState(0)
  // Score state
@@ -140,13 +139,10 @@ const TicTacToe = () => {
     return false;
   };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(prev => !prev);
-  };
 
   return (
     <div className={`min-h-screen flex flex-col items-center justify-center ${isDarkMode ? "bg-gray-800 text-white" : "bg-gradient-to-br from-blue-100 to-purple-200"} p-6`}>
-      <h1 className="text-4xl font-bold mb-4 text-gray-800 drop-shadow-md">
+      <h1 className="text-4xl font-bold mb-4  drop-shadow-md">
       Xtreme Tic-Tac-Toe (PvP)
       </h1>
 
@@ -208,13 +204,6 @@ const TicTacToe = () => {
           className="mt-4 px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg shadow-md transition-all"
         >
           Restart
-        </button>
-
-        <button
-          onClick={toggleDarkMode}
-          className="mt-4 px-6 py-2 bg-gray-300 hover:bg-gray-700 text-white rounded-lg shadow-md transition-all"
-        >
-          {isDarkMode ? <FaSun color="yellow" size={30}/> : <MdDarkMode color="black" size={30}/>}
         </button>
         </div>
       </div>

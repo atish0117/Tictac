@@ -145,13 +145,20 @@ export const ScoreBoard2 = ({ xScore, oScore, resetScores }) => {
 
 
 export const ScoreBoard3 = ({ xWins, oWins, draws, resetScores }) => {
+  const {isDarkMode}=useTheme()
   return (
     <div className="w-full max-w-2xl mx-auto">
-      <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+      <div className={`${isDarkMode ? "bg-gray-900 text-gray-100" : "bg-white"} rounded-xl shadow-lg p-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6`}>
         
         {/* Player 1 */}
         <div className="text-center flex-1">
-          <p className="text-md sm:text-xl font-semibold text-gray-800 dark:text-gray-100">
+          <p className={`text-md sm:text-xl font-semibold  ${
+    xWins > oWins
+      ? "text-green-600"
+      : isDarkMode
+      ? "text-gray-100"
+      : "text-gray-700"
+  }`}>
             🧑 Player 1 (X)
           </p>
           <p className="text-3xl font-extrabold text-blue-600">{xWins}</p>
@@ -160,7 +167,13 @@ export const ScoreBoard3 = ({ xWins, oWins, draws, resetScores }) => {
 
         {/* Player 2 */}
         <div className="text-center flex-1">
-          <p className="text-md sm:text-xl font-semibold text-gray-800 dark:text-gray-100">
+          <p className={`text-md sm:text-xl font-semibold  ${
+    oWins > xWins
+      ? "text-green-600"
+      : isDarkMode
+      ? "text-gray-100"
+      : "text-gray-700"
+  }`}>
             🧑 Player 2 (O)
           </p>
           <p className="text-3xl font-extrabold text-red-500">{oWins}</p>
@@ -169,7 +182,11 @@ export const ScoreBoard3 = ({ xWins, oWins, draws, resetScores }) => {
 
         {/* Draws */}
         <div className="text-center flex-1">
-          <p className="text-md sm:text-xl font-semibold text-gray-800 dark:text-gray-100">
+          <p className={`text-md sm:text-xl font-semibold  ${
+      isDarkMode
+      ? "text-gray-100"
+      : "text-gray-700"
+  }`}>
             🤝 Draws
           </p>
           <p className="text-3xl font-extrabold text-yellow-500">{draws}</p>
@@ -193,13 +210,20 @@ export const ScoreBoard3 = ({ xWins, oWins, draws, resetScores }) => {
 
 
 export const ScoreBoard4 = ({ xWins, oWins, draws, resetScores }) => {
+  const {isDarkMode}=useTheme()
   return (
     <div className="w-full max-w-2xl mx-auto">
-      <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+      <div className={`${isDarkMode ? "bg-gray-900 text-gray-100" : "bg-white"} rounded-xl shadow-lg p-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6`}>
         
         {/* Player (X) */}
         <div className="text-center flex-1">
-          <p className="text-md sm:text-xl font-semibold text-gray-800 dark:text-gray-100">
+          <p className={`text-md sm:text-xl font-semibold ${
+    xWins > oWins
+      ? "text-green-600"
+      : isDarkMode
+      ? "text-gray-100"
+      : "text-gray-700"
+  }`}>
             🧑 Player (X)
           </p>
           <p className="text-3xl font-extrabold text-blue-600">{xWins}</p>
@@ -208,8 +232,13 @@ export const ScoreBoard4 = ({ xWins, oWins, draws, resetScores }) => {
 
         {/* Computer (O) */}
         <div className="text-center flex-1">
-          <p className="text-md sm:text-xl font-semibold text-gray-800 dark:text-gray-100">
-            🤖 Computer (O)
+  <p className={`text-md sm:text-xl font-semibold ${
+    oWins > xWins
+      ? "text-green-600"
+      : isDarkMode
+      ? "text-gray-100"
+      : "text-gray-700"
+  }`}>            🤖 Computer (O)
           </p>
           <p className="text-3xl font-extrabold text-red-600">{oWins}</p>
           <p className="text-sm text-gray-500 dark:text-gray-300">Wins</p>
@@ -217,7 +246,11 @@ export const ScoreBoard4 = ({ xWins, oWins, draws, resetScores }) => {
 
         {/* Draws */}
         <div className="text-center flex-1">
-          <p className="text-md sm:text-xl font-semibold text-gray-800 dark:text-gray-100">
+          <p className={`text-md sm:text-xl font-semibold  ${
+      isDarkMode
+      ? "text-gray-100"
+      : "text-gray-700"
+  }`}>
             🤝 Draws
           </p>
           <p className="text-3xl font-extrabold text-yellow-500">{draws}</p>
