@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { FaSun } from "react-icons/fa";
-import { MdDarkMode } from "react-icons/md";
 import {ScoreBoard1} from '../Components/ScoreBoard'
 import { useTheme } from "../Components/Context/ThemeContext";
 const WINNING_COMBINATIONS = [

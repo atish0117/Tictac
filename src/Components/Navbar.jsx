@@ -45,7 +45,7 @@ const Navbar = () => {
     three: {
       title: '3x3 Game',
       items: [
-        { to: '/', label: 'Two Players' },
+        { to: '/home', label: 'Two Players' },
         { to: '/computer', label: 'With Computer' },
       ],
     },

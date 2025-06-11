@@ -11,6 +11,8 @@ import TicTacToe6x6 from"./Pages/SixBox"
 import AI_TicTacToe6x6 from "./Pages/TicTacToe6x6"
 import AI_Xtreme6x6 from './Pages/AI_Xtreme6x6'
 import Xtreme6x6 from './Pages/Xtreme6x6'
+
+import Home1 from './Pages/Home1'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 export const App = () => {
@@ -20,7 +22,8 @@ export const App = () => {
     <BrowserRouter>
     <Navbar/>
     <Routes>
-      <Route path='/' element={<TicTacToe/>}/>
+      <Route path='/' element={<Home1/>}/>
+      <Route path='/home' element={<TicTacToe/>}/>
       <Route path='computer' element={<Computer/>}/>
       <Route path='four' element={<TicTacToe4x4/>}/>
       <Route path='TicTacToe4x4' element={<AI_TicTacToe4x4/>}/>
