@@ -63,9 +63,9 @@ const HomeGameSelector = () => {
 
   return (
 <div className="min-h-screen bg-[url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center p-6 flex flex-col items-center">
-      <h1 className="text-4xl font-bold text-gray-800 mb-12">Choose Your Game</h1>
+      <h1 className="text-4xl font-bold text-gray-800 mb-60">Choose Your Game</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10 w-full max-w-6xl">
+<div className="grid grid-cols-1 md:grid-cols-3 gap-10  w-full max-w-6xl ">
         {Object.entries(gameOptions).map(([key, game]) => (
           <div key={key} className="flex flex-col items-center">
             <motion.div

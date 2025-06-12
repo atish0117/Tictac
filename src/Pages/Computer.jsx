@@ -189,80 +189,105 @@ const Computer = () => {
 
 
   return (
-    <div
-      className={`min-h-screen flex flex-col items-center justify-center ${
-        isDarkMode ? "bg-gray-800 text-white" : "bg-gradient-to-br from-blue-100 to-purple-200"
-      } p-6`}
-    >
-      <h1 className="text-4xl font-bold mb-4 ">
-        Xtreme Tic-Tac-Toe
-      </h1>
+    <div className={`min-h-screen flex flex-col items-center justify-center ${
+  isDarkMode ? "bg-gray-900" : "bg-gradient-to-br from-blue-50 to-purple-100"
+} p-6`}>
+  <h1 className={`text-4xl font-bold mb-4 ${isDarkMode ? "text-white" : "text-gray-800"}`}>
+    Xtreme Tic-Tac-Toe
+  </h1>
 
-      {/* Scoreboard */}
-          <ScoreBoard2 xScore={xScore} oScore={oScore} resetScores={resetScores}/>
+  {/* Scoreboard */}
+  <ScoreBoard2 xScore={xScore} oScore={oScore} resetScores={resetScores} isDarkMode={isDarkMode} />
 
-<div className="text-lg text-center mb-4">
-        <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>
-      </div>
+  <div className={`text-lg text-center mb-4 ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}>
+    <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>
+  </div>
 
-      {/* Game Board */}
-      <div
-        className="grid grid-cols-3 gap-4 p-4 rounded-2xl"
-        style={{
-          background: 'linear-gradient(45deg, #f0f0f0, #cacaca)',
-          boxShadow: 'inset 5px -5px 2px #5a5a5a, inset -5px 5px 2px #ffffff',
-        }}
-      >
-        {board.map((value, index) => {
-          const isWinningBox = winningCombination.includes(index);
-          const boxColor = isWinningBox ? winningColor : "";
+  {/* Glassmorphism Game Board */}
+  <div
+    className="grid grid-cols-3 gap-4 p-6 rounded-2xl backdrop-blur-sm border border-opacity-20"
+    style={{
+      background: isDarkMode 
+        ? 'rgba(30, 30, 30, 0.5)' 
+        : 'rgba(255, 255, 255, 0.3)',
+      boxShadow: isDarkMode
+        ? '0 8px 32px 0 rgba(0, 0, 0, 0.3)'
+        : '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+      borderColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.3)'
+    }}
+  >
+    {board.map((value, index) => {
+      const isWinningBox = winningCombination.includes(index);
+      const boxColor = isWinningBox ? winningColor : "";
 
-          return (
-            <div
-              key={index}
-              className={`w-24 h-24 flex items-center justify-center text-4xl font-extrabold rounded-xl
-                ${value === "X" ? "text-blue-600" : value === "O" ? "text-pink-500" : ""}
-                ${!value ? "hover:shadow-2xl hover:scale-105 cursor-pointer" : ""}
-                ${isLight(index) ? "bg-gray-500 opacity-50" : ""}
-                shadow-lg transition-all duration-300 ease-in-out select-none`}
-              style={{
-                background: isWinningBox ? boxColor : 'linear-gradient(45deg, #f0f0f0, #cacaca)',
-                boxShadow: '5px -5px 7px #5a5a5a, -5px 5px 7px #ffffff',
-              }}
-              onClick={() => handleBoxClick(index)}
-            >
-              {value}
-            </div>
-          );
-        })}
-      </div>
+      // Neumorphic cell styling
+      const cellBaseStyle = isDarkMode
+        ? {
+            background: isWinningBox 
+              ? boxColor 
+              : 'linear-gradient(145deg, #1e1e1e, #232323)',
+            boxShadow: isWinningBox
+              ? `0 0 15px ${boxColor}, 5px 5px 10px #0d0d0d, -5px -5px 10px #2f2f2f`
+              : '8px 8px 16px #0d0d0d, -8px -8px 16px #2f2f2f'
+          }
+        : {
+            background: isWinningBox 
+              ? boxColor 
+              : 'linear-gradient(145deg, #ffffff, #e6e6e6)',
+            boxShadow: isWinningBox
+              ? `0 0 15px ${boxColor}, 5px 5px 10px #d1d1d1, -5px -5px 10px #ffffff`
+              : '8px 8px 16px #d1d1d1, -8px -8px 16px #ffffff'
+          };
 
-      {/* Info & Buttons */}
-      <div className="mt-3 flex flex-col items-center gap-2">
-        {winner ? (
-          <div className="text-2xl font-semibold text-green-600 animate-bounce">
-            Winner: {winner}
-          </div>
-        ) : (
-          <div
-            className={`text-xl font-medium text-gray-700 transition-all duration-500 ${
-              turnChanged ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            Next Turn: {isXNext ? "X" : "O"}
-          </div>
-        )}
-
-          <div className="flex gap-5">
-        <button
-          onClick={restartGame}
-          className="mt-2 px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg shadow-md transition-all"
+      return (
+        <div
+          key={index}
+          className={`w-24 h-24 flex items-center justify-center text-4xl font-extrabold rounded-xl
+            ${value === "X" ? (isDarkMode ? "text-blue-400" : "text-blue-600") : ""}
+            ${value === "O" ? (isDarkMode ? "text-pink-400" : "text-pink-500") : ""}
+            ${!value ? "cursor-pointer" : ""}
+            transition-all duration-300 ease-in-out select-none`}
+          style={{
+            ...cellBaseStyle,
+            transform: isWinningBox ? 'scale(1.05)' : 'scale(1)',
+            transition: 'all 0.3s ease'
+          }}
+          onClick={() => handleBoxClick(index)}
         >
-          Restart
-        </button>
+          {value}
         </div>
+      );
+    })}
+  </div>
+
+  {/* Info & Buttons */}
+  <div className="mt-6 flex flex-col items-center gap-2">
+    {winner ? (
+      <div className={`text-2xl font-semibold ${isDarkMode ? "text-green-400" : "text-green-600"} animate-pulse`}>
+        Winner: {winner}
       </div>
+    ) : (
+      <div className={`text-xl font-medium ${isDarkMode ? "text-gray-300" : "text-gray-700"} transition-all duration-500 ${
+        turnChanged ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+      }`}>
+        Next Turn: {isXNext ? "X" : "O"}
+      </div>
+    )}
+
+    <div className="flex gap-4 mt-4">
+      <button
+        onClick={restartGame}
+        className={`px-6 py-2 rounded-lg shadow-md transition-all ${
+          isDarkMode 
+            ? "bg-indigo-600 hover:bg-indigo-700 text-white"
+            : "bg-indigo-500 hover:bg-indigo-600 text-white"
+        }`}
+      >
+        Restart
+      </button>
     </div>
+  </div>
+</div>
   );
 };
 
