@@ -246,12 +246,20 @@ const Computer = () => {
             ${value === "X" ? (isDarkMode ? "text-blue-400" : "text-blue-600") : ""}
             ${value === "O" ? (isDarkMode ? "text-pink-400" : "text-pink-500") : ""}
             ${!value ? "cursor-pointer" : ""}
-            transition-all duration-300 ease-in-out select-none`}
+            ${isLight(index) ? "bg-gray-500 opacity-40" : ""}    
+              transition-all duration-300 ease-in-out select-none`}
           style={{
             ...cellBaseStyle,
             transform: isWinningBox ? 'scale(1.05)' : 'scale(1)',
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
           }}
+            
+
+
+              
+
+
+            
           onClick={() => handleBoxClick(index)}
         >
           {value}
