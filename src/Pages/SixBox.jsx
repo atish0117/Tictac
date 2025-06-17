@@ -158,31 +158,6 @@ const TicTacToe6x6 = () => {
         isDarkMode ? "bg-gray-800 text-white" : "bg-gradient-to-br from-blue-100 to-purple-200"
       } flex flex-col items-center `}>
       <h1 className="text-3xl font-bold mb-4">6x6 Tic Tac Toe (PvP)</h1>
-
-      {/* Detailed Scoreboard */}
-      {/* <div className="w-1/2 flex justify-between items-center bg-white p-4 rounded-lg shadow-lg mb-6">
-  <div className="text-center">
-    <p className="text-xl font-bold text-gray-800">🧑 Player (X)</p>
-    <p className="text-3xl font-extrabold text-blue-600">{xWins}</p>
-    <p className="text-lg text-gray-600">Wins</p>
-  </div>
-  <div className="text-center">
-    <p className="text-xl font-bold text-gray-800">🧑 Player (O)</p>
-    <p className="text-3xl font-extrabold text-red-600">{oWins}</p>
-    <p className="text-lg text-gray-600">Wins</p>
-  </div>
-  <div className="text-center">
-    <p className="text-xl font-bold text-gray-800">🤝 Draws</p>
-    <p className="text-3xl font-extrabold text-yellow-600">{draws}</p>
-  </div>
- 
-      <button
-        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        onClick={resetScores}
-      >
-        Reset Scores
-      </button>
-</div> */}
     <ScoreBoard3 xWins={xWins} oWins={oWins} draws={draws} resetScores={resetScores}/>
 
 

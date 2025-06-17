@@ -140,23 +140,7 @@ const TicTacToe4x4 = () => {
       }`}>
       <h1 className="text-3xl font-bold mb-4 text-center">4x4 Tic Tac Toe (PvP)</h1>
 
-      {/* Scoreboard */}
-      {/* <div className="w-1/2 flex justify-between items-center bg-white p-4 rounded-lg shadow-lg mb-6">
-        <div className="text-center">
-          <p className="text-xl font-bold text-gray-800">🧑 Player 1(X)</p>
-          <p className="text-3xl font-extrabold text-blue-600">{xWins}</p>
-          <p className="text-lg text-gray-600">Wins</p>
-        </div>
-        <div className="text-center">
-          <p className="text-xl font-bold text-gray-800">🧑 Player 2(O)</p>
-          <p className="text-3xl font-extrabold text-red-600">{oWins}</p>
-          <p className="text-lg text-gray-600">Wins</p>
-        </div>
-        <div className="text-center">
-          <p className="text-xl font-bold text-gray-800">🤝 Draws</p>
-          <p className="text-3xl font-extrabold text-yellow-600">{draws}</p>
-        </div>
-      </div> */}
+    
           <ScoreBoard3 xWins={xWins} oWins={oWins} draws={draws} resetScores={resetScores}/>
       
 
