@@ -173,18 +173,18 @@ const HomeGameSelector = () => {
                   </div>
                   <div>
                     <h2 className="text-xl font-bold tracking-tight">{cabinet.title}</h2>
-                    <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400">Cabinet Console</span>
+                    <span className={`text-[10px] uppercase font-bold tracking-widest ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Cabinet Console</span>
                   </div>
                 </div>
 
                 {/* Description */}
-                <p className={`text-xs leading-relaxed mb-6 ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+                <p className={`text-xs leading-relaxed mb-6 ${isDarkMode ? 'text-slate-300' : 'text-slate-750'}`}>
                   {cabinet.desc}
                 </p>
 
                 {/* Game Modes Menu (Always Rendered & Stacked) */}
                 <div className="mt-auto flex flex-col gap-2">
-                  <div className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                  <div className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                     Select Mode
                   </div>
                   {cabinet.modes.map((mode) => {
