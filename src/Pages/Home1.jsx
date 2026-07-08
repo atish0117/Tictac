@@ -83,8 +83,7 @@ const HomeGameSelector = () => {
 
   return (
     <div
-      className={`min-h-screen relative overflow-hidden flex flex-col items-center justify-between py-12 px-4 md:px-8 transition-colors duration-300 ${isDarkMode ? "text-white" : "text-slate-900"
-        }`}
+      className="min-h-screen relative overflow-hidden flex flex-col items-center justify-between py-12 px-4 md:px-8 transition-colors duration-300 text-white"
     >
       {/* Background Image with NO class */}
       <img
@@ -108,17 +107,14 @@ const HomeGameSelector = () => {
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: isDarkMode
-            ? 'linear-gradient(to bottom, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.75) 45%, rgba(15, 23, 42, 0.98) 95%)'
-            : 'linear-gradient(to bottom, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.75) 45%, rgba(255, 255, 255, 0.98) 95%)',
+          backgroundImage: 'linear-gradient(to bottom, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.75) 45%, rgba(15, 23, 42, 0.98) 95%)',
           pointerEvents: 'none',
           zIndex: -1
         }}
       />
 
       {/* Cyberpunk Grid Overlay */}
-      <div className={`absolute inset-0 bg-[linear-gradient(rgba(18,24,38,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(18,24,38,0.03)_1px,transparent_1px)] bg-[size:30px_30px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none ${isDarkMode ? 'opacity-20' : 'opacity-8'
-        }`}></div>
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(18,24,38,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(18,24,38,0.03)_1px,transparent_1px)] bg-[size:30px_30px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none opacity-20"></div>
 
       {/* Decorative Neon Blurs */}
       <div className="absolute top-1/4 left-1/10 w-[350px] h-[350px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -128,13 +124,12 @@ const HomeGameSelector = () => {
       <div className="relative z-10 w-full max-w-6xl flex justify-between items-center mb-8 px-2">
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></div>
-          <span className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+          <span className="text-xs font-bold uppercase tracking-widest text-slate-400">
             Live Server Lobby
           </span>
         </div>
-        <div className={`px-4 py-1 rounded-full border text-xs font-bold shadow-sm ${isDarkMode ? 'bg-slate-900/60 border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-600'
-          }`}>
-          🟢 <span className="text-blue-500 dark:text-blue-400">14,832</span> Online Players
+        <div className="px-4 py-1 rounded-full border text-xs font-bold shadow-sm bg-slate-900/60 border-slate-800 text-slate-300">
+          🟢 <span className="text-blue-400">14,832</span> Online Players
         </div>
       </div>
 
@@ -151,7 +146,7 @@ const HomeGameSelector = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
                 onMouseEnter={handleHover}
-                className={`group glass-panel rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 flex flex-col border p-6 relative hover:scale-[1.01] ${isDarkMode ? 'border-slate-800/80 hover:border-slate-700' : 'border-slate-200 hover:border-slate-350'
+                className={`group glass-panel rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 flex flex-col border p-6 relative hover:scale-[1.01] ${isDarkMode ? 'border-slate-800/80 hover:border-slate-700 text-white' : 'border-slate-200 hover:border-slate-350 text-slate-900'
                   }`}
                 style={getCabinetStyle(cabinet)}
               >
@@ -184,7 +179,7 @@ const HomeGameSelector = () => {
 
                 {/* Game Modes Menu (Always Rendered & Stacked) */}
                 <div className="mt-auto flex flex-col gap-2">
-                  <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">
+                  <div className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                     Select Mode
                   </div>
                   {cabinet.modes.map((mode) => {
@@ -218,7 +213,7 @@ const HomeGameSelector = () => {
       </div>
 
       {/* Footer Instructions Info */}
-      <div className="relative z-10 w-full max-w-6xl mt-12 text-center text-xs text-slate-500 dark:text-slate-400 border-t border-slate-200/10 pt-4">
+      <div className="relative z-10 w-full max-w-6xl mt-12 text-center text-xs text-slate-400 border-t border-slate-200/10 pt-4">
         © 2026 TicTac Retro Gaming Inc. • Select a game cabinet above to insert coin and play.
       </div>
     </div>
