@@ -14,6 +14,8 @@ const gameCabinets = {
     glowColor: 'rgba(6, 182, 212, 0.45)',
     accentBg: 'bg-cyan-500/10 text-cyan-400',
     accentBorder: 'border-cyan-500/30',
+    accentText: 'text-cyan-500 dark:text-cyan-400',
+    borderHover: 'hover:border-cyan-500/50 hover:bg-cyan-500/5',
     playersOnline: '4,831',
     bgImage: '/cyan_card_bg.png',
     modes: [
@@ -29,6 +31,8 @@ const gameCabinets = {
     glowColor: 'rgba(139, 92, 246, 0.45)',
     accentBg: 'bg-violet-500/10 text-violet-400',
     accentBorder: 'border-violet-500/30',
+    accentText: 'text-violet-500 dark:text-violet-400',
+    borderHover: 'hover:border-violet-500/50 hover:bg-violet-500/5',
     playersOnline: '7,104',
     bgImage: '/purple_card_bg.png',
     modes: [
@@ -46,6 +50,8 @@ const gameCabinets = {
     glowColor: 'rgba(244, 63, 94, 0.45)',
     accentBg: 'bg-pink-500/10 text-pink-400',
     accentBorder: 'border-pink-500/30',
+    accentText: 'text-pink-500 dark:text-pink-400',
+    borderHover: 'hover:border-pink-500/50 hover:bg-pink-500/5',
     playersOnline: '2,903',
     bgImage: '/pink_card_bg.png',
     modes: [
@@ -59,6 +65,7 @@ const gameCabinets = {
 
 const HomeGameSelector = () => {
   const { isDarkMode } = useTheme();
+  const [hoveredCabinet, setHoveredCabinet] = React.useState(null);
 
   const handleHover = () => {
     playHoverSound();
@@ -69,15 +76,20 @@ const HomeGameSelector = () => {
   };
 
   // Generate dynamic cabinet styles with linear gradients over images for legibility
-  const getCabinetStyle = (cabinet) => {
+  const getCabinetStyle = (cabinet, isHovered) => {
     const overlay = isDarkMode
-      ? 'linear-gradient(to bottom, rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98))'
-      : 'linear-gradient(to bottom, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.98))';
+      ? 'linear-gradient(to bottom, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.75) 100%)'
+      : 'linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.8) 100%)';
     return {
       backgroundImage: `${overlay}, url('${cabinet.bgImage}')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
-      boxShadow: `0 10px 30px -15px ${cabinet.glowColor}`
+      boxShadow: isHovered
+        ? `0 20px 45px -10px ${cabinet.glowColor.replace('0.45', '0.7')}, 0 0 20px ${cabinet.glowColor}`
+        : `0 10px 30px -15px ${cabinet.glowColor}`,
+      borderColor: isHovered ? cabinet.glowColor.replace('0.45', '0.75') : undefined,
+      transform: isHovered ? 'translateY(-6px)' : 'none',
+      transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
     };
   };
 
@@ -134,10 +146,14 @@ const HomeGameSelector = () => {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
-                onMouseEnter={handleHover}
-                className={`group glass-panel rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 flex flex-col border p-6 relative hover:scale-[1.01] ${isDarkMode ? 'border-slate-800/80 hover:border-slate-700 text-white' : 'border-slate-200 hover:border-slate-350 text-slate-900'
-                  }`}
-                style={getCabinetStyle(cabinet)}
+                onMouseEnter={() => { handleHover(); setHoveredCabinet(key); }}
+                onMouseLeave={() => setHoveredCabinet(null)}
+                className={`group glass-panel rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 flex flex-col border p-6 relative ${
+                  isDarkMode 
+                    ? 'border-slate-800/80 text-white' 
+                    : 'border-slate-200 text-slate-900'
+                }`}
+                style={getCabinetStyle(cabinet, hoveredCabinet === key)}
               >
                 {/* Neon Cabinet Marquee Header */}
                 <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${cabinet.themeColor}`} />
@@ -147,7 +163,7 @@ const HomeGameSelector = () => {
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded border uppercase tracking-wider ${cabinet.accentBg} ${cabinet.accentBorder}`}>
                     Active: {cabinet.playersOnline}
                   </span>
-                  <div className="w-1.5 h-1.5 rounded-full bg-slate-400 group-hover:bg-blue-500 transition-colors" />
+                  <div className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${hoveredCabinet === key ? 'bg-blue-500 animate-pulse' : 'bg-slate-400'}`} />
                 </div>
 
                 {/* Title & Icon */}
@@ -179,16 +195,17 @@ const HomeGameSelector = () => {
                         to={mode.to}
                         onClick={handleModeClick}
                         onMouseEnter={handleHover}
-                        className={`flex items-center justify-between p-3 rounded-xl border transition-all duration-200 ${isDarkMode
-                            ? 'bg-slate-950/70 border-slate-900 hover:bg-slate-900 hover:border-slate-800 text-white'
-                            : 'bg-white border-slate-200 hover:bg-slate-100 hover:border-slate-300 text-slate-800'
-                          }`}
+                        className={`flex items-center justify-between p-3 rounded-xl border transition-all duration-200 ${
+                          isDarkMode
+                            ? `bg-slate-950/70 border-slate-900 text-white ${cabinet.borderHover}`
+                            : `bg-white border-slate-200 text-slate-800 ${cabinet.borderHover}`
+                        }`}
                       >
                         <div className="flex items-center gap-2.5">
-                          <ModeIcon className="w-4 h-4 text-blue-500" />
+                          <ModeIcon className={`w-4 h-4 ${cabinet.accentText}`} />
                           <span className="text-sm font-bold">{mode.label}</span>
                         </div>
-                        <span className="text-[9px] uppercase tracking-wider px-2 py-0.5 rounded bg-blue-500/10 text-blue-500 dark:text-blue-400 border border-blue-500/20 font-semibold">
+                        <span className={`text-[9px] uppercase tracking-wider px-2 py-0.5 rounded border font-semibold ${cabinet.accentBg} ${cabinet.accentBorder}`}>
                           {mode.type}
                         </span>
                       </NavLink>
