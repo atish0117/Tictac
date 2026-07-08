@@ -102,17 +102,6 @@ const HomeGameSelector = () => {
         }}
       />
 
-      {/* Gradient Overlay with NO class */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: 'linear-gradient(to bottom, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.75) 45%, rgba(15, 23, 42, 0.98) 95%)',
-          pointerEvents: 'none',
-          zIndex: -1
-        }}
-      />
-
       {/* Cyberpunk Grid Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(18,24,38,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(18,24,38,0.03)_1px,transparent_1px)] bg-[size:30px_30px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none opacity-20"></div>
 
