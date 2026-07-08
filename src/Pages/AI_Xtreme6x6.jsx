@@ -1,36 +1,69 @@
 import React, { useState, useEffect } from "react";
-import { FaSun } from "react-icons/fa";
-import { MdDarkMode } from "react-icons/md";
 import { ScoreBoard2 } from "../Components/ScoreBoard";
 import { useTheme } from "../Components/Context/ThemeContext";
+import { motion, AnimatePresence } from "framer-motion";
+import { playClickSound, playWinSound } from "../utils/sounds";
 
 const SIZE = 6;
-const getRandomColor = () => {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) color += letters[Math.floor(Math.random() * 16)];
-  return color;
+
+const generateWinningCombinations = () => {
+  const size = SIZE;
+  const combos = [];
+
+  // Horizontal
+  for (let row = 0; row < size; row++) {
+    const base = row * size;
+    combos.push([base, base + 1, base + 2, base + 3, base + 4, base + 5]);
+  }
+
+  // Vertical
+  for (let col = 0; col < size; col++) {
+    combos.push([
+      col,
+      col + size,
+      col + size * 2,
+      col + size * 3,
+      col + size * 4,
+      col + size * 5
+    ]);
+  }
+
+  // Diagonal ↘
+  combos.push([0, 7, 14, 21, 28, 35]);
+  // Diagonal ↙
+  combos.push([5, 10, 15, 20, 25, 30]);
+
+  return combos;
 };
+
+const WINNING_COMBINATIONS = generateWinningCombinations();
 
 const AI_Xtreme6x6 = () => {
   const [board, setBoard] = useState(Array(SIZE * SIZE).fill(""));
   const [xQueue, setXQueue] = useState([]);
   const [oQueue, setOQueue] = useState([]);
-  const [xRound, setXRound] = useState(0);
-  const [oRound, setORound] = useState(0);
   const [isXNext, setIsXNext] = useState(true);
   const [winner, setWinner] = useState(null);
   const [winningCombination, setWinningCombination] = useState([]);
   const [winningColor, setWinningColor] = useState("");
-  const [turnChanged, setTurnChanged] = useState(false);
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
+  const { isDarkMode } = useTheme();
 
-    const {isDarkMode}=useTheme()
+  const getRandomColor = () => {
+    const colors = [
+      "rgba(34, 197, 94, 0.4)",  // green
+      "rgba(168, 85, 247, 0.4)", // purple
+      "rgba(234, 179, 8, 0.4)",  // yellow
+      "rgba(59, 130, 246, 0.4)",  // blue
+      "rgba(244, 63, 94, 0.4)"   // rose
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
+
   const calculateWinner = (squares) => {
-    const lines =generateWinningCombos(SIZE,6)
-    for (let line of lines) {
-      const [a, b, c, d, e, f] = line;
+    for (let combo of WINNING_COMBINATIONS) {
+      const [a, b, c, d, e, f] = combo;
       if (
         squares[a] &&
         squares[a] === squares[b] &&
@@ -39,140 +72,71 @@ const AI_Xtreme6x6 = () => {
         squares[a] === squares[e] &&
         squares[a] === squares[f]
       ) {
-        setWinningCombination(line);
-        return squares[a];  // 'X' or 'O'
+        return { winner: squares[a], combo };
       }
     }
     return null;
   };
-  
-// Generate winning combinations dynamically for 6x6 board
-  const generateWinningCombos = (size, inARow) => {
-    const combos = [];
-    // Horizontal, Vertical, Diagonal combinations
-    for (let row = 0; row < size; row++) {
-      for (let col = 0; col <= size - inARow; col++) {
-        const start = row * size + col;
-        combos.push(Array.from({ length: inARow }, (_, i) => start + i));
-      }
+
+  // Minimax simulating Xtreme queue rules
+  const minimax = (boardState, xQueueState, oQueueState, depth, isMaximizing) => {
+    const winResult = calculateWinner(boardState);
+    if (winResult) {
+      if (winResult.winner === "O") return 10 - depth;
+      if (winResult.winner === "X") return depth - 10;
     }
+    
+    // Depth limit of 2 for 6x6 grid search space performance
+    if (depth >= 2 || !boardState.includes("")) return 0;
 
-    for (let col = 0; col < size; col++) {
-      for (let row = 0; row <= size - inARow; row++) {
-        const start = row * size + col;
-        combos.push(Array.from({ length: inARow }, (_, i) => start + i * size));
+    if (isMaximizing) {
+      let best = -Infinity;
+      for (let i = 0; i < 36; i++) {
+        if (boardState[i] === "") {
+          const nextBoard = [...boardState];
+          nextBoard[i] = "O";
+          let nextOQueue = [...oQueueState, i];
+          if (nextOQueue.length > 8) {
+            const removed = nextOQueue.shift();
+            nextBoard[removed] = "";
+          }
+          const score = minimax(nextBoard, xQueueState, nextOQueue, depth + 1, false);
+          best = Math.max(best, score);
+        }
       }
-    }
-
-    for (let row = 0; row <= size - inARow; row++) {
-      for (let col = 0; col <= size - inARow; col++) {
-        const start = row * size + col;
-        combos.push(Array.from({ length: inARow }, (_, i) => start + i * (size + 1)));
-      }
-    }
-
-    for (let row = 0; row <= size - inARow; row++) {
-      for (let col = inARow - 1; col < size; col++) {
-        const start = row * size + col;
-        combos.push(Array.from({ length: inARow }, (_, i) => start + i * (size - 1)));
-      }
-    }
-
-    return combos;
-  };
-
-  const isDraw = (squares) => squares.every((s) => s !== "") && !calculateWinner(squares);
-
-  const makeMove = (index, player) => {
-    const newBoard = [...board];
-    newBoard[index] = player;
-
-    if (player === "X") {
-      let newXQueue = [...xQueue, index];
-      if (newXQueue.length === 8) setXRound((prev) => prev + 1);
-      if (newXQueue.length > 8 && oRound > 0) {
-        const removeIndex = newXQueue.shift();
-        newBoard[removeIndex] = "";
-      }
-      setXQueue(newXQueue);
+      return best;
     } else {
-      let newOQueue = [...oQueue, index];
-      if (newOQueue.length === 8) setORound((prev) => prev + 1);
-      if (newOQueue.length > 8 && xRound > 0) {
-        const removeIndex = newOQueue.shift();
-        newBoard[removeIndex] = "";
+      let best = Infinity;
+      for (let i = 0; i < 36; i++) {
+        if (boardState[i] === "") {
+          const nextBoard = [...boardState];
+          nextBoard[i] = "X";
+          let nextXQueue = [...xQueueState, i];
+          if (nextXQueue.length > 8) {
+            const removed = nextXQueue.shift();
+            nextBoard[removed] = "";
+          }
+          const score = minimax(nextBoard, nextXQueue, oQueueState, depth + 1, true);
+          best = Math.min(best, score);
+        }
       }
-      setOQueue(newOQueue);
+      return best;
     }
-
-    setBoard(newBoard);
-    const win = calculateWinner(newBoard);
-    if (win) {
-      setWinner(win);
-      setWinningColor(getRandomColor());  // This will generate a random color for the winning line
-      new Audio("/win-sound.mp3").play();
-      if (win === "X") setXScore((prev) => prev + 1);
-      else setOScore((prev) => prev + 1);
-    } else if (isDraw(newBoard)) {
-      setWinner("Draw");
-    } else {
-      setIsXNext(player !== "X");
-      setTurnChanged(true);
-    }
-  };
-
-  const handleBoxClick = (index) => {
-    if (board[index] || winner || !isXNext) return;
-    new Audio("/click-sound.mp3").play();
-    makeMove(index, "X");
-  };
-
-  const restartGame = () => {
-    setBoard(Array(SIZE * SIZE).fill(""));
-    setXQueue([]);
-    setOQueue([]);
-    setXRound(0);
-    setORound(0);
-    setIsXNext(true);
-    setWinner(null);
-    setWinningCombination([]);
-    setWinningColor("");
-    setTurnChanged(false);
-  };
-
-  const isLight = (index) => {
-    if (winner) return false;
-    if (isXNext && xQueue.length >= 6 && oRound > 0 && xQueue[0] === index) return true;
-    if (!isXNext && oQueue.length >= 6 && xRound > 0 && oQueue[0] === index) return true;
-    return false;
-  };
-
-
-  const minimax = (boardState, depth, isMaximizing) => {
-    const result = calculateWinner(boardState);
-    if (result === "O") return 10 - depth;
-    if (result === "X") return depth - 10;
-    if (!boardState.includes("") || depth >= 3) return 0;
-
-    const scores = [];
-    for (let i = 0; i < boardState.length; i++) {
-      if (boardState[i] === "") {
-        const newBoard = [...boardState];
-        newBoard[i] = isMaximizing ? "O" : "X";
-        scores.push(minimax(newBoard, depth + 1, !isMaximizing));
-      }
-    }
-    return isMaximizing ? Math.max(...scores) : Math.min(...scores);
   };
 
   const getBestMove = () => {
     let bestScore = -Infinity;
     let move = null;
-    for (let i = 0; i < board.length; i++) {
+    for (let i = 0; i < 36; i++) {
       if (board[i] === "") {
-        const newBoard = [...board];
-        newBoard[i] = "O";
-        const score = minimax(newBoard, 0, false);
+        const nextBoard = [...board];
+        nextBoard[i] = "O";
+        let nextOQueue = [...oQueue, i];
+        if (nextOQueue.length > 8) {
+          const removed = nextOQueue.shift();
+          nextBoard[removed] = "";
+        }
+        const score = minimax(nextBoard, xQueue, nextOQueue, 0, false);
         if (score > bestScore) {
           bestScore = score;
           move = i;
@@ -182,75 +146,200 @@ const AI_Xtreme6x6 = () => {
     return move;
   };
 
-  // auto move for AI
+  const computerMove = () => {
+    if (winner || isXNext) return;
+
+    const move = getBestMove();
+    if (move !== null) {
+      const newBoard = [...board];
+      newBoard[move] = "O";
+      let newOQueue = [...oQueue, move];
+      if (newOQueue.length > 8) {
+        const removed = newOQueue.shift();
+        newBoard[removed] = "";
+      }
+
+      playClickSound();
+
+      setOQueue(newOQueue);
+      setBoard(newBoard);
+
+      const winResult = calculateWinner(newBoard);
+      if (winResult) {
+        setWinner(winResult.winner);
+        setWinningCombination(winResult.combo);
+        setWinningColor(getRandomColor());
+        playWinSound();
+        setOScore((prev) => prev + 1);
+      } else {
+        setIsXNext(true);
+      }
+    }
+  };
+
+  const handleBoxClick = (index) => {
+    if (board[index] || winner || !isXNext) return;
+
+    playClickSound();
+
+    const newBoard = [...board];
+    newBoard[index] = "X";
+
+    let newXQueue = [...xQueue, index];
+    if (newXQueue.length > 8) {
+      const removed = newXQueue.shift();
+      newBoard[removed] = "";
+    }
+
+    setXQueue(newXQueue);
+    setBoard(newBoard);
+
+    const winResult = calculateWinner(newBoard);
+    if (winResult) {
+      setWinner(winResult.winner);
+      setWinningCombination(winResult.combo);
+      setWinningColor(getRandomColor());
+      playWinSound();
+      setXScore((prev) => prev + 1);
+    } else {
+      setIsXNext(false);
+    }
+  };
+
   useEffect(() => {
     if (!isXNext && !winner) {
-      const timeout = setTimeout(() => {
-        const move = getBestMove();
-        if (move !== null) makeMove(move, "O");
-      }, 500);
+      const timeout = setTimeout(computerMove, 600);
       return () => clearTimeout(timeout);
     }
   }, [isXNext, board, winner]);
 
-  const resetScores=()=>{
-    setXScore(0)
-    setOScore(0)
-  }
+  const restartGame = () => {
+    setBoard(Array(SIZE * SIZE).fill(""));
+    setXQueue([]);
+    setOQueue([]);
+    setIsXNext(true);
+    setWinner(null);
+    setWinningCombination([]);
+    setWinningColor("");
+  };
+
+  const isLight = (index) => {
+    if (winner) return false;
+    if (isXNext && xQueue.length === 8 && xQueue[0] === index) return true;
+    if (!isXNext && oQueue.length === 8 && oQueue[0] === index) return true;
+    return false;
+  };
+
+  const resetScores = () => {
+    setXScore(0);
+    setOScore(0);
+  };
 
   return (
-    <div className={`min-h-screen flex flex-col items-center justify-center ${isDarkMode ? "bg-gray-800 text-white" : "bg-gradient-to-br from-yellow-100 to-pink-200"} p-6`}>
-      <h1 className="text-4xl font-bold mb-6 drop-shadow-md">Xtreme 6x6 Tic-Tac-Toe (AI Mode)</h1>
+    <div className={`min-h-screen flex flex-col items-center justify-center p-6 transition-colors duration-300 ${
+      isDarkMode 
+        ? "bg-slate-950 text-white bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black" 
+        : "bg-slate-50 text-slate-900 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100 via-slate-50 to-slate-100"
+    }`}>
+      {/* Decorative Blur Spheres */}
+      <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-pink-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="relative z-10 w-full max-w-lg flex flex-col items-center">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-6"
+        >
+          <h1 className="text-3xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+            Xtreme 6x6 AI
+          </h1>
+          <p className="text-xs uppercase tracking-widest mt-1 text-slate-500 dark:text-slate-400">
+            Play against the queue-aware AI on a 6x6 board
+          </p>
+        </motion.div>
+
         {/* Scoreboard */}
-     <ScoreBoard2 xScore={xScore} oScore={oScore} resetScores={resetScores}/>
-      <div className="grid grid-cols-6 gap-2 rounded-xl p-4 shadow-inner"
-       style={{ 
-        boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.4 )',
-        backdropFilter: 'blur(4px)',
-        WebkitBackdropFilter: 'blur(4px)',
-        background: 'rgba( 250, 242, 242, 0.05 )',
-        borderRadius: '10px',
-        border: '1px solid rgba( 255, 255, 255, 0.18 )',
-      }}
-      >
-      {board.map((val, idx) => {
-  const isWinning = winningCombination.includes(idx);
-  const bgColor = isWinning ? winningColor : "";
-  return (
-    <div
-    key={idx}
-    onClick={() => handleBoxClick(idx)}
-    className={`w-16 h-16 md:w-18 md:h-18 flex items-center justify-center text-4xl font-extrabold border-2 rounded-xl 
-    ${val === "X" ? "text-blue-600" : "text-pink-500"} 
-    ${!val ? "hover:shadow-2xl hover:scale-105 cursor-pointer hover:bg-gray-300" : ""} 
-    ${isLight(idx) ? "bg-gray-300 opacity-70" : "bg-white"} 
-    transition-all duration-300 select-none shadow-md`}
-    style={{ backgroundColor: bgColor }}
-  >
-    {val}
-  </div>
-  );
-})}
+        <ScoreBoard2 xScore={xScore} oScore={oScore} resetScores={resetScores} />
 
-      </div>
+        {/* Board Display */}
+        <div className="grid-3d-wrapper w-full flex justify-center mb-8">
+          <div 
+            className="grid-3d grid grid-cols-6 gap-2 p-3 rounded-2xl glass-panel shadow-2xl relative"
+            style={{ width: "max-content" }}
+          >
+            {board.map((value, index) => {
+              const isWinningBox = winningCombination.includes(index);
+              const isOldestMark = isLight(index);
 
-      <div className="mt-2 flex flex-col items-center gap-2">
-        {winner && winner !== "Draw" && (
-          <div className="text-2xl font-semibold text-green-600 animate-bounce">Winner: {winner}</div>
-        )}
-        {winner === "Draw" && (
-          <div className="text-xl font-semibold text-yellow-600">It's a Draw!</div>
-        )}
-        {!winner && (
-          <div className={`text-xl font-medium transition-all duration-500 ${turnChanged ? "opacity-100" : "opacity-0"}`}>
-            Next Turn: {isXNext ? "X" : "O"}
+              return (
+                <motion.button
+                  key={index}
+                  whileHover={{ scale: !value && !winner && isXNext ? 1.05 : 1 }}
+                  whileTap={{ scale: !value && !winner && isXNext ? 0.95 : 1 }}
+                  className={`w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-xl font-extrabold border rounded-lg shadow-sm transition-all duration-300 select-none
+                    ${value === "X" ? "text-blue-500 glow-x" : "text-pink-500 glow-o"}
+                    ${isOldestMark ? "mark-fading border-rose-500/40 bg-rose-500/5" : ""}
+                    ${isWinningBox ? "scale-105 border-green-500/50" : ""}
+                    ${isDarkMode 
+                      ? "bg-slate-900/60 border-slate-800 hover:bg-slate-800/80" 
+                      : "bg-white border-slate-200 hover:bg-slate-100/50"
+                    }
+                    ${!isXNext ? "cursor-not-allowed" : ""}`}
+                  style={{
+                    backgroundColor: isWinningBox ? winningColor : undefined,
+                    boxShadow: isWinningBox ? `0 0 15px ${winningColor}` : undefined
+                  }}
+                  onClick={() => handleBoxClick(index)}
+                  disabled={!!value || !!winner || !isXNext}
+                >
+                  {value}
+                </motion.button>
+              );
+            })}
           </div>
-        )}
-        <div className="flex gap-4 mt-4">
-          <button onClick={restartGame} className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition">
-            Restart
+        </div>
+
+        {/* Action Info */}
+        <div className="flex flex-col items-center gap-4">
+          <AnimatePresence mode="wait">
+            {winner ? (
+              <motion.div 
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                className="text-2xl font-black text-green-500 drop-shadow-md"
+              >
+                🎉 Winner: {winner === "X" ? "You!" : "AI"}
+              </motion.div>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className={`text-base font-semibold px-4 py-1.5 rounded-full border shadow-sm ${
+                  isDarkMode 
+                    ? "bg-slate-900 border-slate-800 text-slate-300" 
+                    : "bg-white border-slate-200 text-slate-700"
+                }`}
+              >
+                {isXNext ? (
+                  <span>Your Turn <span className="text-blue-500">(X)</span></span>
+                ) : (
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span>
+                    AI is thinking... <span className="text-pink-500">(O)</span>
+                  </span>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <button
+            onClick={restartGame}
+            className="px-6 py-2.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 active:scale-95"
+          >
+            Restart Game
           </button>
-         
         </div>
       </div>
     </div>

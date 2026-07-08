@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../App.css'; // Create this CSS file for styling
+// import '../App.css'; // Create this CSS file for styling
 
 const ErrorPage = ({ statusCode, errorType, onRetry }) => {
   const navigate = useNavigate();

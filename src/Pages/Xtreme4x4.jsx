@@ -1,51 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { FaSun } from "react-icons/fa";
-import { MdDarkMode } from "react-icons/md";
 import { ScoreBoard1 } from "../Components/ScoreBoard";
 import { useTheme } from "../Components/Context/ThemeContext";
+import { motion, AnimatePresence } from "framer-motion";
+import { playClickSound, playWinSound } from "../utils/sounds";
+
 const WINNING_COMBINATIONS = [
   // Horizontal
-  [0, 1, 2, 3],
-  [4, 5, 6, 7],
-  [8, 9, 10, 11],
-  [12, 13, 14, 15],
-  
+  [0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15],
   // Vertical
-  [0, 4, 8, 12],
-  [1, 5, 9, 13],
-  [2, 6, 10, 14],
-  [3, 7, 11, 15],
-  
+  [0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15],
   // Diagonals
-  [0, 5, 10, 15],
-  [3, 6, 9, 12],
+  [0, 5, 10, 15], [3, 6, 9, 12],
 ];
 
 const Xtreme4x4 = () => {
   const [board, setBoard] = useState(Array(16).fill(""));
   const [xQueue, setXQueue] = useState([]);
   const [oQueue, setOQueue] = useState([]);
-  const [xRound, setXRound] = useState(0);
-  const [oRound, setORound] = useState(0);
   const [isXNext, setIsXNext] = useState(true);
   const [winner, setWinner] = useState(null);
   const [winningCombination, setWinningCombination] = useState([]);
   const [winningColor, setWinningColor] = useState("");
-  const [turnChanged, setTurnChanged] = useState(false);
-  const [totalGames, setTotalGames] = useState(0);
-  // Score variables
   const [xScore, setXScore] = useState(0);
   const [oScore, setOScore] = useState(0);
+  const { isDarkMode } = useTheme();
 
-
-    const {isDarkMode}=useTheme()
   const getRandomColor = () => {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+    const colors = [
+      "rgba(34, 197, 94, 0.4)",  // green
+      "rgba(168, 85, 247, 0.4)", // purple
+      "rgba(234, 179, 8, 0.4)",  // yellow
+      "rgba(59, 130, 246, 0.4)",  // blue
+      "rgba(244, 63, 94, 0.4)"   // rose
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
   };
 
   const calculateWinner = (squares) => {
@@ -57,9 +45,7 @@ const Xtreme4x4 = () => {
         squares[a] === squares[c] &&
         squares[a] === squares[d]
       ) {
-        setWinningCombination(combo);
-        setWinningColor(getRandomColor());
-        return squares[a];
+        return { winner: squares[a], combo };
       }
     }
     return null;
@@ -69,27 +55,22 @@ const Xtreme4x4 = () => {
     if (board[index] || winner) return;
 
     const newBoard = [...board];
-    newBoard[index] = isXNext ? "X" : "O";
+    const currentPlayer = isXNext ? "X" : "O";
+    newBoard[index] = currentPlayer;
 
-    const clickSound = new Audio("/click-sound.mp3");
-    clickSound.play();
+    playClickSound();
 
     if (isXNext) {
       let newXQueue = [...xQueue, index];
-      if (newXQueue.length === 5) {
-        setXRound((prev) => prev + 1);
-      }
-      if (newXQueue.length > 5 && oRound > 0) {
+      // Limit to 5 marks. The 6th mark removes the 1st mark.
+      if (newXQueue.length > 5) {
         const removeIndex = newXQueue.shift();
         newBoard[removeIndex] = "";
       }
       setXQueue(newXQueue);
     } else {
       let newOQueue = [...oQueue, index];
-      if (newOQueue.length === 5) {
-        setORound((prev) => prev + 1);
-      }
-      if (newOQueue.length > 5 && xRound > 0) {
+      if (newOQueue.length > 5) {
         const removeIndex = newOQueue.shift();
         newBoard[removeIndex] = "";
       }
@@ -97,120 +78,144 @@ const Xtreme4x4 = () => {
     }
 
     setBoard(newBoard);
-    const win = calculateWinner(newBoard);
-    if (win) {
-      setWinner(win);
-      const winSound = new Audio("/win-sound.mp3");
-      winSound.play();
+    const winResult = calculateWinner(newBoard);
+
+    if (winResult) {
+      setWinner(winResult.winner);
+      setWinningCombination(winResult.combo);
+      setWinningColor(getRandomColor());
+      playWinSound();
       
-      // Update the score based on the winner
-      if (win === "X") {
-        setXScore(xScore + 1);
+      if (winResult.winner === "X") {
+        setXScore(prev => prev + 1);
       } else {
-        setOScore(oScore + 1);
+        setOScore(prev => prev + 1);
       }
     } else {
       setIsXNext(!isXNext);
-      setTurnChanged(true);
     }
   };
-
-  useEffect(()=>{
-      setTotalGames(xScore+oScore)
-  },[xScore,oScore])
 
   const restartGame = () => {
     setBoard(Array(16).fill(""));
     setXQueue([]);
     setOQueue([]);
-    setXRound(0);
-    setORound(0);
     setIsXNext(true);
     setWinner(null);
     setWinningCombination([]);
     setWinningColor("");
-    setTurnChanged(false);
   };
 
   const isLight = (index) => {
     if (winner) return false;
-    if (isXNext && xQueue.length >= 5 && oRound > 0 && xQueue[0] === index) {
+    // 5 marks max. Highlight the oldest when queue reaches 5.
+    if (isXNext && xQueue.length === 5 && xQueue[0] === index) {
       return true;
     }
-    if (!isXNext && oQueue.length >= 5 && xRound > 0 && oQueue[0] === index) {
+    if (!isXNext && oQueue.length === 5 && oQueue[0] === index) {
       return true;
     }
     return false;
   };
 
- 
-
   return (
-    <div
-      className={`min-h-screen flex flex-col items-center justify-center ${
-        isDarkMode ? "bg-gray-800 text-white" : "bg-gradient-to-br from-blue-100 to-purple-200"
-      } p-6`}
-    >
-      <h1 className="text-4xl font-bold mb-6  drop-shadow-md">Xtreme Tic-Tac-Toe (PvP)</h1>
+    <div className={`min-h-screen flex flex-col items-center justify-center p-6 transition-colors duration-300 ${
+      isDarkMode 
+        ? "bg-slate-950 text-white bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black" 
+        : "bg-slate-50 text-slate-900 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100 via-slate-50 to-slate-100"
+    }`}>
+      {/* Decorative Blur Spheres */}
+      <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-pink-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-       <ScoreBoard1 xScore={xScore} oScore={oScore} resetScores={() => { setXScore(0); setOScore(0); }} />
-
-
-      <div className="text-lg text-center mb-4">
-        <h3 className="text-xl font-semibold">Total Games: {totalGames}</h3>
-      </div>
-
-      <div
-        className="grid grid-cols-4 gap-4 bg-amber-200 p-4 rounded-2xl transform rotate-3d-[30deg]"
-        style={{
-          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.4)",
-          backdropFilter: "blur(4px)",
-          WebkitBackdropFilter: "blur(4px)",
-          background: "rgba(250, 242, 242, 0.05)",
-          borderRadius: "10px",
-          border: "1px solid rgba(255, 255, 255, 0.18)",
-        }}
-      >
-        {board.map((value, index) => {
-          const isWinningBox = winningCombination.includes(index);
-          const boxColor = isWinningBox ? winningColor : "";
-
-          return (
-            <div
-              key={index}
-              className={`w-24 h-24 flex items-center justify-center text-4xl font-extrabold border-2 rounded-xl ${
-                value === "X" ? "text-blue-600" : "text-pink-500"
-              } ${!value ? "hover:shadow-2xl hover:scale-105 cursor-pointer" : ""} ${
-                isLight(index) ? "bg-gray-300 opacity-70" : "bg-white"
-              } shadow-lg transition-all duration-300 ease-in-out select-none`}
-              style={{ backgroundColor: boxColor }}
-              onClick={() => handleBoxClick(index)}
-            >
-              {value}
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="mt-6 flex flex-col items-center gap-2">
-        {winner ? (
-          <div className="text-2xl font-semibold text-green-600 animate-bounce">Winner: {winner}</div>
-        ) : (
-          <div
-            className={`text-xl font-medium text-gray-700 transition-all duration-500 ${
-              turnChanged ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            Next Turn: {isXNext ? "X" : "O"}
-          </div>
-        )}
-
-        <button
-          onClick={restartGame}
-          className="mt-4 px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg shadow-md transition-all"
+      <div className="relative z-10 w-full max-w-lg flex flex-col items-center">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-6"
         >
-          Restart
-        </button>
+          <h1 className="text-3xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+            Xtreme 4x4 PvP
+          </h1>
+          <p className="text-xs uppercase tracking-widest mt-1 text-slate-500 dark:text-slate-400">
+            Disappearing Marks PvP (Max 5 Marks)
+          </p>
+        </motion.div>
+
+        {/* Scoreboard */}
+        <ScoreBoard1 xScore={xScore} oScore={oScore} resetScores={() => { setXScore(0); setOScore(0); }} />
+
+        {/* 3D Grid Board */}
+        <div className="grid-3d-wrapper w-full flex justify-center mb-8">
+          <div 
+            className="grid-3d grid grid-cols-4 gap-2.5 p-4 rounded-2xl glass-panel shadow-2xl relative"
+            style={{ width: "max-content" }}
+          >
+            {board.map((value, index) => {
+              const isWinningBox = winningCombination.includes(index);
+              const isOldestMark = isLight(index);
+
+              return (
+                <motion.button
+                  key={index}
+                  whileHover={{ scale: !value && !winner ? 1.05 : 1 }}
+                  whileTap={{ scale: !value && !winner ? 0.95 : 1 }}
+                  className={`w-14 h-14 sm:w-18 sm:h-18 flex items-center justify-center text-3xl font-extrabold border rounded-xl shadow-md transition-all duration-300 select-none
+                    ${value === "X" ? "text-blue-500 glow-x" : "text-pink-500 glow-o"}
+                    ${isOldestMark ? "mark-fading border-rose-500/40 bg-rose-500/5" : ""}
+                    ${isWinningBox ? "scale-105 border-green-500/50" : ""}
+                    ${isDarkMode 
+                      ? "bg-slate-900/60 border-slate-800 hover:bg-slate-800/80" 
+                      : "bg-white border-slate-200 hover:bg-slate-100/50"
+                    }`}
+                  style={{
+                    backgroundColor: isWinningBox ? winningColor : undefined,
+                    boxShadow: isWinningBox ? `0 0 20px ${winningColor}` : undefined
+                  }}
+                  onClick={() => handleBoxClick(index)}
+                  disabled={!!value || !!winner}
+                >
+                  {value}
+                </motion.button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Action Controls */}
+        <div className="flex flex-col items-center gap-4">
+          <AnimatePresence mode="wait">
+            {winner ? (
+              <motion.div 
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                className="text-2xl font-black text-green-500 drop-shadow-md"
+              >
+                🎉 Winner: Player {winner}
+              </motion.div>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className={`text-base font-semibold px-4 py-1.5 rounded-full border shadow-sm ${
+                  isDarkMode 
+                    ? "bg-slate-900 border-slate-800 text-slate-300" 
+                    : "bg-white border-slate-200 text-slate-700"
+                }`}
+              >
+                Next Turn: <span className={isXNext ? "text-blue-500" : "text-pink-500"}>{isXNext ? "Player X" : "Player O"}</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <button
+            onClick={restartGame}
+            className="px-6 py-2.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 active:scale-95"
+          >
+            Restart Game
+          </button>
+        </div>
       </div>
     </div>
   );
