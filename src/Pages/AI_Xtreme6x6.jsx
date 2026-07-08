@@ -277,7 +277,7 @@ const AI_Xtreme6x6 = () => {
                   key={index}
                   whileHover={{ scale: !value && !winner && isXNext ? 1.05 : 1 }}
                   whileTap={{ scale: !value && !winner && isXNext ? 0.95 : 1 }}
-                  className={`w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-xl font-extrabold border rounded-lg shadow-sm transition-all duration-300 select-none
+                  className={`w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center text-lg sm:text-xl font-extrabold border rounded-lg shadow-sm transition-all duration-300 select-none
                     ${value === "X" ? "text-blue-500 glow-x" : "text-pink-500 glow-o"}
                     ${isOldestMark ? "mark-fading border-rose-500/40 bg-rose-500/5" : ""}
                     ${isWinningBox ? "scale-105 border-green-500/50" : ""}

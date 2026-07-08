@@ -195,8 +195,8 @@ const AI_TicTacToe6x6 = () => {
     return (
       <div
         key={index}
-        className={`w-16 h-16 md:w-18 md:h-18  border-2 
-          flex items-center justify-center text-2xl font-bold cursor-pointer
+        className={`w-9 h-9 sm:w-12 sm:h-12 border-2 
+          flex items-center justify-center text-lg sm:text-2xl font-bold cursor-pointer
           transition-all duration-200 ease-in-out select-none
           ${
             board[index] === 'X'

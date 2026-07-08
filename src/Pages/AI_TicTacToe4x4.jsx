@@ -189,7 +189,7 @@ const AI_TicTacToe4x4 = () => {
     return (
       <button
         key={index}
-        className={`w-16 h-16  md:w-20 md:h-20 border-2 flex items-center justify-center
+        className={`w-12 h-12 md:w-16 md:h-16 border-2 flex items-center justify-center
            text-2xl font-bold cursor-pointer rounded-md
           transition-all duration-200 ease-in-out select-none
           ${

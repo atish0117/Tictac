@@ -234,7 +234,7 @@ const Computer = () => {
                   key={index}
                   whileHover={{ scale: !value && !winner && isXNext ? 1.05 : 1 }}
                   whileTap={{ scale: !value && !winner && isXNext ? 0.95 : 1 }}
-                  className={`w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center text-4xl font-extrabold border rounded-xl shadow-md transition-all duration-300 select-none
+                  className={`w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center text-3xl sm:text-4xl font-extrabold border rounded-xl shadow-md transition-all duration-300 select-none
                     ${value === "X" ? "text-blue-500 glow-x" : "text-pink-500 glow-o"}
                     ${isOldestMark ? "mark-fading border-rose-500/40 bg-rose-500/5" : ""}
                     ${isWinningBox ? "scale-105 border-green-500/50" : ""}

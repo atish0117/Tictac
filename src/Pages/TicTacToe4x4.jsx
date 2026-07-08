@@ -114,7 +114,7 @@ const TicTacToe4x4 = () => {
         key={index}
         onClick={() => handleClick(index)}
         className={`
-          w-16 h-16 md:w-20 md:h-20 border-2 rounded-md 
+          w-12 h-12 md:w-16 md:h-16 border-2 rounded-md 
           flex items-center justify-center text-2xl font-bold cursor-pointer
           transition-all duration-200 ease-in-out select-none
           ${

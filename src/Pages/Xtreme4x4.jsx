@@ -160,7 +160,7 @@ const Xtreme4x4 = () => {
                   key={index}
                   whileHover={{ scale: !value && !winner ? 1.05 : 1 }}
                   whileTap={{ scale: !value && !winner ? 0.95 : 1 }}
-                  className={`w-14 h-14 sm:w-18 sm:h-18 flex items-center justify-center text-3xl font-extrabold border rounded-xl shadow-md transition-all duration-300 select-none
+                  className={`w-12 h-12 sm:w-15 sm:h-15 flex items-center justify-center text-2xl sm:text-3xl font-extrabold border rounded-xl shadow-md transition-all duration-300 select-none
                     ${value === "X" ? "text-blue-500 glow-x" : "text-pink-500 glow-o"}
                     ${isOldestMark ? "mark-fading border-rose-500/40 bg-rose-500/5" : ""}
                     ${isWinningBox ? "scale-105 border-green-500/50" : ""}
